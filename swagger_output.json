@@ -1,0 +1,169 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RespirAR Módulo EStaciones API",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/estaciones/estaciones/{id?}": {
+      "get": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para obtener una estación.",
+        "parameters": [
+          {
+            "name": "id?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/estaciones/{idSolicitud?}": {
+      "post": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para publicar una estación.",
+        "parameters": [
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/estaciones/datosEstacion/{id}": {
+      "get": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para obtener datos de una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/estaciones/suspenderEstacion/{id}": {
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para suspender una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/estaciones/habilitarEstacion/{id}": {
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para habilitar una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/solicitudes/altaSolicitud/": {
+      "post": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para dar de alta una solicitud.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/estaciones/estaciones/datosConexion/{id}": {
+      "get": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para visualizar datos de conexión de estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para modificar datos de conexión de estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/solicitudes/": {
+      "get": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para obtener un listado de solicitudes.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/estaciones/solicitudes/{idSolicitud}": {
+      "post": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para confirmar una solicitud.",
+        "parameters": [
+          {
+            "name": "idSolicitud",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
