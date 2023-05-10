@@ -3,6 +3,7 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from './swagger_output.json' assert {type: 'json'};
 import { RouterEstaciones } from "./router/estaciones.js";
+import { RouterSolicitudes } from "./router/solicitudes.js";
 
 class Server {
     constructor(port) {
@@ -22,6 +23,7 @@ class Server {
         /* --------------------------------------------------------------- */
 
         this.app.use("/estaciones", new RouterEstaciones().start());
+        this.app.use("/solicitudes", new RouterSolicitudes().start());
 
         /* --------------------------------------------------------------- */
         /*                         SERVER LISTEN                           */

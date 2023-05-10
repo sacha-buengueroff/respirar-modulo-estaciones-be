@@ -11,63 +11,76 @@ export class RouterEstaciones {
 
     start() {
         /* GET Estaciones */
-        this.router.get('/estaciones/:id?', this.controladorEstaciones.getEstaciones
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para obtener una estación.'
+        this.router.get('/:id?', this.controladorEstaciones.getEstaciones
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para obtener una estación.'
+        #swagger.parameters["id?"] = {
+            in: "path",
+            required: "false"
+
+        }
+        */
         )
 
-        /* POST Estación */
-        this.router.post('/estaciones/:idSolicitud?', this.controladorEstaciones.postEstacion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para publicar una estación.'
-        )
-
-        /* GET Datos de Estación */
-        this.router.get('/estaciones/datosEstacion/:id', this.controladorEstaciones.getDatosEstacion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para obtener datos de una estación.'
+        /* GET Visualización de Datos de Conexión de Estación */
+        this.router.get('/datosConexion/:id', this.controladorEstaciones.getDatosConexion
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para visualizar datos de conexión de estación.'
+        #swagger.parameters["id"] = {
+            in: "path",
+            required: "true"
+        }
+        */
         )
         
         /* PUT Suspender Estación */
-        this.router.put('/estaciones/suspenderEstacion/:id', this.controladorEstaciones.suspenderEstacion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para suspender una estación.'
+        this.router.put('/suspenderEstacion/:id', this.controladorEstaciones.suspenderEstacion
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para suspender una estación.'
+        #swagger.parameters["id"] = {
+            in: "path",
+            required: "true"
+        }
+        */
         )
         
         /* PUT Habilitar Estación */
-        this.router.put('/estaciones/habilitarEstacion/:id', this.controladorEstaciones.habilitarEstacion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para habilitar una estación.'
-        )
-        
-        /* GET Visualización de Datos de Conexión de Estación */
-        this.router.get('/estaciones/datosConexion/:id', this.controladorEstaciones.getDatosConexion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para visualizar datos de conexión de estación.'
+        this.router.put('/habilitarEstacion/:id', this.controladorEstaciones.habilitarEstacion
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para habilitar una estación.'
+        #swagger.parameters["id"] = {
+            in: "path",
+            required: "true"
+        }
+        */
         )
         
         /* PUT Modificación de Datos de Conexión de Estación */
-        this.router.put('/estaciones/datosConexion/:id', this.controladorEstaciones.putDatosConexion
-        // #swagger.tags = ['Estaciones']
-        // #swagger.description = 'Endpoint para modificar datos de conexión de estación.'
-        )
-        
-        /* POST Alta Solicitud de Inscripción de Estación */
-        this.router.post('/solicitudes/altaSolicitud/', this.controladorEstaciones.postSolicitud
-        // #swagger.tags = ['Solicitudes']
-        // #swagger.description = 'Endpoint para dar de alta una solicitud.'
-        )
-
-        /* GET Listado de Solicitudes de Inscripción de EStaciones */
-        this.router.get('/solicitudes/', this.controladorEstaciones.getSolicitudes
-        // #swagger.tags = ['Solicitudes']
-        // #swagger.description = 'Endpoint para obtener un listado de solicitudes.'
+        this.router.put('/datosConexion/:id', this.controladorEstaciones.putDatosConexion
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para modificar datos de conexión de estación.'
+        #swagger.parameters["id"] = {
+            in: "path",
+            required: "true"
+        }
+        */
         )
 
-        /* POST Confirmación Solicitud */
-        this.router.post('/solicitudes/:idSolicitud', this.controladorEstaciones.confirmarSolicitud
-        // #swagger.tags = ['Solicitudes']
-        // #swagger.description = 'Endpoint para confirmar una solicitud.'
+        /* POST Estación */
+        this.router.post('/:idSolicitud?', this.controladorEstaciones.postEstacion
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para publicar una estación.'
+        #swagger.parameters["idSolicitud?"] = {
+            in: "path",
+            required: "false"
+        }
+        */
         )
         
         return this.router

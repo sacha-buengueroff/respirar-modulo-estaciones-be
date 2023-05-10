@@ -13,14 +13,6 @@ class ControladorEstaciones {
         res.json({})
     }
 
-    postSolicitud = async (req,res) => {
-        res.json({})
-    }
-
-    getSolicitudes = async (req,res) => {
-        res.json({})
-    }
-
     getDatosEstacion = async (req,res) => {
         res.json({})
     }
@@ -30,10 +22,6 @@ class ControladorEstaciones {
     }
 
     habilitarEstacion = async (req,res) => {
-        res.json({})
-    }
-
-    confirmarSolicitud = async (req,res) => {
         res.json({})
     }
 

@@ -11,7 +11,7 @@
     "http"
   ],
   "paths": {
-    "/estaciones/estaciones/{id?}": {
+    "/estaciones/{id?}": {
       "get": {
         "tags": [
           "Estaciones"
@@ -21,92 +21,14 @@
           {
             "name": "id?",
             "in": "path",
-            "required": true,
+            "required": false,
             "type": "string"
           }
         ],
         "responses": {}
       }
     },
-    "/estaciones/estaciones/{idSolicitud?}": {
-      "post": {
-        "tags": [
-          "Estaciones"
-        ],
-        "description": "Endpoint para publicar una estación.",
-        "parameters": [
-          {
-            "name": "idSolicitud?",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/estaciones/estaciones/datosEstacion/{id}": {
-      "get": {
-        "tags": [
-          "Estaciones"
-        ],
-        "description": "Endpoint para obtener datos de una estación.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/estaciones/estaciones/suspenderEstacion/{id}": {
-      "put": {
-        "tags": [
-          "Estaciones"
-        ],
-        "description": "Endpoint para suspender una estación.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/estaciones/estaciones/habilitarEstacion/{id}": {
-      "put": {
-        "tags": [
-          "Estaciones"
-        ],
-        "description": "Endpoint para habilitar una estación.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/estaciones/solicitudes/altaSolicitud/": {
-      "post": {
-        "tags": [
-          "Solicitudes"
-        ],
-        "description": "Endpoint para dar de alta una solicitud.",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/estaciones/estaciones/datosConexion/{id}": {
+    "/estaciones/datosConexion/{id}": {
       "get": {
         "tags": [
           "Estaciones"
@@ -138,30 +60,81 @@
         "responses": {}
       }
     },
-    "/estaciones/solicitudes/": {
-      "get": {
+    "/estaciones/suspenderEstacion/{id}": {
+      "put": {
         "tags": [
-          "Solicitudes"
+          "Estaciones"
         ],
-        "description": "Endpoint para obtener un listado de solicitudes.",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/estaciones/solicitudes/{idSolicitud}": {
-      "post": {
-        "tags": [
-          "Solicitudes"
-        ],
-        "description": "Endpoint para confirmar una solicitud.",
+        "description": "Endpoint para suspender una estación.",
         "parameters": [
           {
-            "name": "idSolicitud",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
+        "responses": {}
+      }
+    },
+    "/estaciones/habilitarEstacion/{id}": {
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para habilitar una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/{idSolicitud?}": {
+      "post": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para publicar una estación.",
+        "parameters": [
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/solicitudes/{idSolicitud?}": {
+      "get": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para obtener un listado de solicitudes.",
+        "parameters": [
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/solicitudes/": {
+      "post": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para dar de alta una solicitud.",
+        "parameters": [],
         "responses": {}
       }
     }
