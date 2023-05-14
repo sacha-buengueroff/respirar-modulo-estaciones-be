@@ -1,12 +1,14 @@
+import ApiEstaciones from '../api/ApiEstaciones.js' 
 
 class ControladorEstaciones {
 
     constructor() {
-
+        this.apiEstaciones = new ApiEstaciones()
     }
 
     getEstaciones = async (req,res) => {
-        res.json({})
+        const {id} = req.params
+        res.json(await this.apiEstaciones.getDatosEstaciones(id))
     }
 
     postEstacion = async (req,res) => {
