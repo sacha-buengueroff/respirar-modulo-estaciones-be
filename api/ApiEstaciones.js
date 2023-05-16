@@ -3,21 +3,20 @@ import axios from 'axios'
 
 class ApiEstaciones {
 
-    getDatosEstaciones = async(id) => {
-        const config = {
+    constructor() {
+        this.url = "http://localhost:1026/v2/entities/"
+        this.config = {
             headers: {
                 "fiware-service": "openiot",
                 "fiware-servicepath": "/"
             }
         }
-        let url = "http://localhost:1026/v2/entities/"
-        if (id) {
-            url = url + id
-        }
-        const respuesta = await axios.get(url, config)        
-        return respuesta.data
     }
 
+    getDatosEstaciones = async(id) => {
+        const respuesta = id? await axios.get(this.url + id, this.config) : await axios.get(this.url, this.config)          
+        return respuesta.data
+    }
 
 }
 
