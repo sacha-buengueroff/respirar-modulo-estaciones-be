@@ -4,11 +4,13 @@ import swaggerUi from "swagger-ui-express";
 import swaggerFile from './swagger_output.json' assert {type: 'json'};
 import { RouterEstaciones } from "./router/estaciones.js";
 import { RouterSolicitudes } from "./router/solicitudes.js";
+import ApiCheck from "./api/apiCheck.js";
 
 class Server {
     constructor(port) {
         this.app = express()
         this.port = port
+        this.apiCheck = new ApiCheck()
     }
 
     async start() {
@@ -29,12 +31,19 @@ class Server {
         /*                         SERVER LISTEN                           */
         /* --------------------------------------------------------------- */
 
+        //Chequea status y config de IotAgentUl
+        await this.apiCheck.checkAgentUl()
+        await this.apiCheck.checkCb()
+        
+
         this.server = this.app.listen(this.port, () =>
             console.log(`Servidor express escuchando en el puerto ${this.port}`)
         );
         this.server.on("error", (error) =>
             console.log(`Error en servidor: ${error.message}`)
         );
+
+
 
         return this.app
     }
