@@ -1,4 +1,4 @@
-import ApiEstaciones from '../api/ApiEstaciones.js' 
+import ApiEstaciones from '../api/apiEstaciones.js' 
 
 class ControladorEstaciones {
 
