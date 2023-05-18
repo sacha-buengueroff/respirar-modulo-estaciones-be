@@ -1,6 +1,7 @@
 import EstacionesHttp from '../httpMethods/estacionesHttp.js'
 import AgentUlHttp from '../httpMethods/agentUlHttp.js'
 
+import CbHttp from '../httpMethods/cbHttp.js'
 
 class ApiEstaciones {
 
