@@ -18,9 +18,11 @@ class ApiEstaciones {
     postEstacion = async (formulario) => {
         // obtengo estaciones para saber la cantidad
         const estaciones = await this.estacionesHttp.getEstaciones()
+        const numberId = (estaciones.length + 1)
 
-        formulario.id = this.type + (estaciones.length + 1)
-        formulario.entityName = this.protocolo + this.type + ":" + (estaciones.length + 1)
+        // Concatenacion
+        formulario.id = this.type + numberId
+        formulario.entityName = this.protocolo + this.type + ":" + numberId
         formulario.name = this.protocolo + formulario.name
 
         return this.AgentUlHttp.postEstacion(formulario)
