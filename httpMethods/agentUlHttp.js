@@ -24,6 +24,18 @@ class AgentUlHttp {
         }
     }
 
+    async postEstacion(formulario) {
+        var body ={}
+        
+        try {
+            const respuesta = await axios.post(this.url + "/devices",body,this.headers)
+            return respuesta.status
+        }
+        catch (e) {
+            throw new Error('Error creando una estación');
+        }
+    }
+
     async createService() {
 
         const body = {
