@@ -12,7 +12,9 @@ class ControladorEstaciones {
     }
 
     postEstacion = async (req,res) => {
-        res.json({})
+        var formulario = req.body
+        var response = await this.apiEstaciones.postEstacion(formulario)
+        res.status(response.status).json(response)
     }
 
     getDatosEstacion = async (req,res) => {

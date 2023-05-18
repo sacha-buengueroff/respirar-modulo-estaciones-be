@@ -11,6 +11,10 @@ class AgentUlHttp {
                 "Content-Type": "application/json"
             }
         }
+        this.entityType = "AirQualityObserved"
+        this.urlCb = "http://orion:1026"
+        this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
+        this.resource = "/iot/d"
     }
 
     async getAgentStatus() {
@@ -24,29 +28,112 @@ class AgentUlHttp {
         }
     }
 
-    async createService() {
+    async postEstacion(formulario) {
+        var { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
 
-        const body = {
-            "services": [
+        var body = {
+            "devices": [
                 {
-                    "apikey": "4jggokgpepnvsb2uv4s40d59ov",
-                    "cbroker": "http://orion:1026",
-                    "entity_type": "Motion",
-                    "resource": "/iot/d"
+                    "device_id": id,
+                    "entity_name": entityName,
+                    "entity_type": this.entityType,
+                    "attributes": [
+                        {
+                            "object_id": "reliability",
+                            "name": "reliability",
+                            "type": "Float"
+                        },
+                        {
+                            "object_id": "temperature",
+                            "name": "temperature",
+                            "type": "Float"
+                        },
+                        {
+                            "object_id": "pm25",
+                            "name": "pm25",
+                            "type": "Float"
+                        },
+                        {
+                            "object_id": "pm10",
+                            "name": "pm10",
+                            "type": "Float"
+                        },
+                        {
+                            "object_id": "pm1",
+                            "name": "pm1",
+                            "type": "Float"
+                        }
+                    ],
+                    "static_attributes": [
+                        {
+                            "name": "dataProvider",
+                            "type": "String",
+                            "value": external?"External":"Respirar"
+                        },
+                        {
+                            "name": "ownerId",
+                            "type": "String",
+                            "value": name
+                        },
+                        {
+                            "name": "location",
+                            "type": "Point",
+                            "value": {
+                                "coordinates": coordinates    
+                            }
+                        },
+                        {
+                            "name": "address",
+                            "type": "Address",
+                            "value": {
+                                "address": {
+                                    "streetAddress": addStreet,
+                                    "addressLocality": addlocaly,
+                                    "addressRegion": addRegion
+                                }
+                            }
+                        }
+                    ]
                 }
             ]
         }
-        try {
-            const respuesta = await axios.post(this.url + "/services", body, this.config)
-            console.log(respuesta.status)
-            return respuesta.status
-        } catch (e) {
-            if(e.response.status !== 409){
-                throw new Error('Imagen IotAgent no esta disponible');
-            }
-            console.log("Service previamente creado")
+        
+        try{
+            var respuesta = await axios.post(this.url + "/devices", body , this.config)
+            return {status : respuesta.status , 
+                   mensaje : "Se agrego exitosamente el device " + id}
+        }catch(e){
+            return {status : e.response.status , 
+                    mensaje : e.response.data.name}
         }
+            
+        
+
+
     }
+
+    async createService() {
+
+    const body = {
+        "services": [
+            {
+                "apikey": this.apikey,
+                "cbroker": this.urlCb,
+                "entity_type": this.entityType,
+                "resource": this.resource
+            }
+        ]
+    }
+    try {
+        const respuesta = await axios.post(this.url + "/services", body, this.config)
+        return respuesta.status
+    } catch (e) {
+        if (e.response.status !== 409) {
+            throw new Error('Imagen IotAgent no esta disponible');
+        }
+        console.log("Service previamente creado")
+    }
+}
 }
 
 export default AgentUlHttp
