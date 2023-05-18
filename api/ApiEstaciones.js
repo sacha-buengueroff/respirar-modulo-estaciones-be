@@ -1,14 +1,14 @@
-import EstacionesHttp from '../httpMethods/estacionesHttp.js'
 
+import CbHttp from '../httpMethods/cbHttp.js'
 
 class ApiEstaciones {
 
     constructor(){
-        this.estacionesHttp = new EstacionesHttp()
+        this.contexBrokerHttp = new CbHttp()
     }
 
     getDatosEstaciones = async(id) => {          
-        return await this.estacionesHttp.getEstaciones(id)
+        return await this.contexBrokerHttp.getEstaciones(id)
     }
 
 }
