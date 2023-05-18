@@ -15,7 +15,6 @@ class CbHttp {
             throw new Error('Context Broker no disponible');
         }
     }
-
 }
 
 export default CbHttp

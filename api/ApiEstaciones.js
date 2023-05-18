@@ -1,29 +1,31 @@
 import EstacionesHttp from '../httpMethods/estacionesHttp.js'
-import AgentUlHttp from '../httpMethods/agentUlHttp.js' 
+import AgentUlHttp from '../httpMethods/agentUlHttp.js'
 
 
 class ApiEstaciones {
 
-    constructor(){
+    constructor() {
         this.estacionesHttp = new EstacionesHttp()
+        this.AgentUlHttp = new AgentUlHttp()
+        this.protocolo = "urn:ngsi-ld:"
+        this.type = "AirQualityObserved"
     }
 
-    getDatosEstaciones = async(id) => {          
+    getDatosEstaciones = async (id) => {
         return await this.estacionesHttp.getEstaciones(id)
     }
 
-    postEstacion = async (formulario) =>{
-        // obtengo numero para saber id
+    postEstacion = async (formulario) => {
+        // obtengo estaciones para saber la cantidad
         const estaciones = await this.estacionesHttp.getEstaciones()
 
-        var id = estaciones.length
-       // completo el body
-       
-       // realizo la llamada a Agent
+        formulario.id = this.type + (estaciones.length + 1)
+        formulario.entityName = this.protocolo + this.type + ":" + (estaciones.length + 1)
+        formulario.name = this.protocolo + formulario.name
 
-       // compruebo la existencia
+        return this.AgentUlHttp.postEstacion(formulario)
 
-       // TODO Envio de mail
+        // TODO Envio de mail(si es externo)
 
     }
 
