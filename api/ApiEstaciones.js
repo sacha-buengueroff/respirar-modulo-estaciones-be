@@ -17,8 +17,8 @@ class ApiEstaciones {
     postEstacion = async (formulario) => {
         // obtengo estaciones para saber la cantidad
         const estaciones = await this.cbHttp.getEstaciones()
-        const numberId = (estaciones.length + 1)
-
+        let numberId = (estaciones.mensaje.length + 1)
+        
         // Concatenacion
         formulario.id = this.type + numberId
         formulario.entityName = this.protocolo + this.type + ":" + numberId

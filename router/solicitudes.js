@@ -1,5 +1,5 @@
 import express from 'express'
-import ControladorSolicitudes from '../controller/solicitudes.js'
+import ControladorSolicitudes from '../controller/solicitudesController.js'
 
 
 export class RouterSolicitudes {
