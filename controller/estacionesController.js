@@ -8,7 +8,8 @@ class ControladorEstaciones {
 
     getEstaciones = async (req,res) => {
         const {id} = req.params
-        res.json(await this.apiEstaciones.getDatosEstaciones(id))
+        const response= await this.apiEstaciones.getDatosEstaciones(id)
+        res.status(response.status).json(response.mensaje)
     }
 
     postEstacion = async (req,res) => {
