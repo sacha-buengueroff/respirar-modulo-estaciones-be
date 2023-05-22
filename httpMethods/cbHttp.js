@@ -23,8 +23,15 @@ class CbHttp {
     }
 
     getEstaciones = async(id) => {
-        const respuesta = id? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)          
-        return respuesta.data
+        try {
+            const respuesta = id? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
+            return {status : respuesta.status , 
+                mensaje : respuesta.data}
+        } catch (error) {
+            return {status : error.response.status , 
+                mensaje : error.response.data.name}
+        }
+      
     }
 
 }

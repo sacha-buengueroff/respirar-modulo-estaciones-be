@@ -1,5 +1,5 @@
 import express from 'express'
-import ControladorEstaciones from '../controller/estaciones.js'
+import ControladorEstaciones from '../controller/estacionesController.js'
 
 
 export class RouterEstaciones {

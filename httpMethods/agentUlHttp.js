@@ -29,9 +29,9 @@ class AgentUlHttp {
     }
 
     async postEstacion(formulario) {
-        var { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
+        const { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
 
-        var body = {
+        let body = {
             "devices": [
                 {
                     "device_id": id,
@@ -39,12 +39,12 @@ class AgentUlHttp {
                     "entity_type": this.entityType,
                     "attributes": [
                         {
-                            "object_id": "reliability",
+                            "object_id": "r",
                             "name": "reliability",
                             "type": "Float"
                         },
                         {
-                            "object_id": "temperature",
+                            "object_id": "t",
                             "name": "temperature",
                             "type": "Float"
                         },
@@ -99,7 +99,7 @@ class AgentUlHttp {
         }
         
         try{
-            var respuesta = await axios.post(this.url + "/devices", body , this.config)
+            let respuesta = await axios.post(this.url + "/devices", body , this.config)
             return {status : respuesta.status , 
                    mensaje : "Se agrego exitosamente el device " + id}
         }catch(e){
