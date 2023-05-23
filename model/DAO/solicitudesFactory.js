@@ -4,10 +4,10 @@ class SolicitudesFactoryDAO {
     static get(tipo) {
         switch(tipo) {
             case 'MONGO' :
-                console.log("**** Persistiendo Recetas  en MongoDB ****");
+                console.log("**** Persistiendo Solicitudes  en MongoDB ****");
                 return new SolicitudesMongoDB()
             default :
-            console.log("**** Persistiendo Recetas en Default (MongoDB) ****");
+            console.log("**** Persistiendo Solicitudes en Default (MongoDB) ****");
                 return new SolicitudesMongoDB()
         }
     }

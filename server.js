@@ -34,7 +34,7 @@ class Server {
         /*                         SERVER LISTEN                           */
         /* --------------------------------------------------------------- */
 
-        if (config.MODO_PERSISTENCIA == "MONGO") {
+        if (config.MODO_PERSISTENCIA.toUpperCase() === "MONGO") {
             await CnxMongoDB.conectar();
         }
         

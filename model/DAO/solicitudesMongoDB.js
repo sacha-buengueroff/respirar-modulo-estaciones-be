@@ -37,7 +37,7 @@ class SolicitudesMongoDB {
         }
     }
     
-    updateReceta = async (solicitud, id) => {
+    updateSolicitud = async (solicitud, id) => {
         if(!CnxMongoDB.connection) return {}
         try {
             await CnxMongoDB.db.collection('solicituds').updateOne(
