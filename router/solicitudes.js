@@ -27,6 +27,10 @@ export class RouterSolicitudes {
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para dar de alta una solicitud.'
+        #swagger.parameters["solicitud"] = {
+            in: "body",
+            required: "true"
+        }
         */
         )
 
