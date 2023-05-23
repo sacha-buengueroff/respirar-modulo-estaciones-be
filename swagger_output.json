@@ -134,7 +134,17 @@
           "Solicitudes"
         ],
         "description": "Endpoint para dar de alta una solicitud.",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "solicitud",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
         "responses": {}
       }
     }

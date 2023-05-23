@@ -4,13 +4,16 @@ import swaggerUi from "swagger-ui-express";
 import swaggerFile from './swagger_output.json' assert {type: 'json'};
 import { RouterEstaciones } from "./router/estaciones.js";
 import { RouterSolicitudes } from "./router/solicitudes.js";
+import CnxMongoDB from "./model/DB.js";
+import config from "./config.js";
 import ApiCheck from "./api/apiCheck.js";
 
 class Server {
-    constructor(port) {
+    constructor(port, persistencia) {
         this.app = express()
         this.port = port
         this.apiCheck = new ApiCheck()
+        this.persistencia = persistencia
     }
 
     async start() {
@@ -31,6 +34,10 @@ class Server {
         /*                         SERVER LISTEN                           */
         /* --------------------------------------------------------------- */
 
+        if (config.MODO_PERSISTENCIA == "MONGO") {
+            await CnxMongoDB.conectar();
+        }
+        
         //Chequea status y config de IotAgentUl
         await this.apiCheck.checkAgentUl()
         await this.apiCheck.checkCb()
@@ -43,13 +50,12 @@ class Server {
             console.log(`Error en servidor: ${error.message}`)
         );
 
-
-
         return this.app
     }
 
     async stop() {
         this.server.close()
+        await CnxMongoDB.desconectar()
     }
 }
 
