@@ -20,7 +20,8 @@ class ApiEstaciones {
         let numberId = (estaciones.mensaje.length + 1)
         
         // Concatenacion
-        formulario.id = this.type + numberId
+        formulario.type = this.type 
+        formulario.numberId = this.numberId
         formulario.entityName = this.protocolo + this.type + ":" + numberId
         formulario.name = this.protocolo + formulario.name
 
