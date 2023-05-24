@@ -33,6 +33,15 @@ class CbHttp {
         }
       
     }
+    suspenderEstacion = async (id)=>{
+        let body={
+            "enable":{
+            "value":false,
+            "type":"Boolean"
+            }
+        }
+        await axios.patch(this.url + "v2/entities/" + id + "/attrs/",body, this.config)
+    }
 
 }
 

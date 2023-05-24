@@ -29,6 +29,9 @@ class ApiEstaciones {
         // TODO Envio de mail(si es externo)
 
     }
+    suspenderEstacion = async (id) =>{
+        return this.AgentUlHttp.suspenderEstacion(id)
+    }
 
 }
 

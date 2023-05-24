@@ -1,8 +1,10 @@
 import axios from 'axios'
+import CbHttp from '../httpMethods/cbHttp.js'
 
 class AgentUlHttp {
 
     constructor() {
+        this.cbHttp = new CbHttp()
         this.url = "http://localhost:4041/iot"
         this.config = {
             headers: {
@@ -29,7 +31,7 @@ class AgentUlHttp {
     }
 
     async postEstacion(formulario) {
-        const { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
+        const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = formulario
 
         let body = {
             "devices": [
@@ -62,13 +64,18 @@ class AgentUlHttp {
                             "object_id": "pm1",
                             "name": "pm1",
                             "type": "Float"
-                        }
+                        },
                     ],
                     "static_attributes": [
                         {
                             "name": "dataProvider",
                             "type": "String",
-                            "value": external?"External":"Respirar"
+                            "value": external ? "External" : "Respirar"
+                        },
+                        {
+                            "name": "enable",
+                            "type": "Boolean",
+                            "value": true
                         },
                         {
                             "name": "ownerId",
@@ -79,7 +86,7 @@ class AgentUlHttp {
                             "name": "location",
                             "type": "Point",
                             "value": {
-                                "coordinates": coordinates    
+                                "coordinates": coordinates
                             }
                         },
                         {
@@ -88,7 +95,7 @@ class AgentUlHttp {
                             "value": {
                                 "address": {
                                     "streetAddress": addStreet,
-                                    "addressLocality": addlocaly,
+                                    "addressLocality": addLocaly,
                                     "addressRegion": addRegion
                                 }
                             }
@@ -97,43 +104,63 @@ class AgentUlHttp {
                 }
             ]
         }
-        
-        try{
-            let respuesta = await axios.post(this.url + "/devices", body , this.config)
-            return {status : respuesta.status , 
-                   mensaje : "Se agrego exitosamente el device " + id}
-        }catch(e){
-            return {status : e.response.status , 
-                    mensaje : e.response.data.name}
+
+        try {
+            let respuesta = await axios.post(this.url + "/devices", body, this.config)
+            return {
+                status: respuesta.status,
+                mensaje: "Se agrego exitosamente el device " + id
+            }
+        } catch (e) {
+            return {
+                status: e.response.status,
+                mensaje: e.response.data.name
+            }
         }
-            
-        
+
+
 
 
     }
 
     async createService() {
 
-    const body = {
-        "services": [
-            {
-                "apikey": this.apikey,
-                "cbroker": this.urlCb,
-                "entity_type": this.entityType,
-                "resource": this.resource
-            }
-        ]
-    }
-    try {
-        const respuesta = await axios.post(this.url + "/services", body, this.config)
-        return respuesta.status
-    } catch (e) {
-        if (e.response.status !== 409) {
-            throw new Error('Imagen IotAgent no esta disponible');
+        const body = {
+            "services": [
+                {
+                    "apikey": this.apikey,
+                    "cbroker": this.urlCb,
+                    "entity_type": this.entityType,
+                    "resource": this.resource
+                }
+            ]
         }
-        console.log("Service previamente creado")
+        try {
+            const respuesta = await axios.post(this.url + "/services", body, this.config)
+            return respuesta.status
+        } catch (e) {
+            if (e.response.status !== 409) {
+                throw new Error('Imagen IotAgent no esta disponible');
+            }
+            console.log("Service previamente creado")
+        }
     }
-}
+    async suspenderEstacion(id){
+        try {
+            await this.cbHttp.suspenderEstacion(id)
+            id=id.split(":").slice(2).join("")
+            const respuesta=await axios.delete(this.url + "/devices"+ "/" + id, this.config)
+            return {
+                status:respuesta.status,
+                mensaje: "se suspendio correctamente el device "+ id
+            }
+        } catch (e) {
+           return {
+                status: e.response.status,
+                mensaje: "Error al suspender el device " + id
+            }
+        }
+    }
 }
 
 export default AgentUlHttp

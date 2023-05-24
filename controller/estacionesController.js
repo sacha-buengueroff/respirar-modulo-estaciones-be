@@ -1,4 +1,4 @@
-import ApiEstaciones from '../api/apiEstaciones.js'
+import ApiEstaciones from '../api/ApiEstaciones.js'
 
 class ControladorEstaciones {
 
@@ -14,13 +14,12 @@ class ControladorEstaciones {
 
     postEstacion = async (req, res) => {
         let formulario = req.body
-        let { name, coordinates, addStreet, addlocaly, addRegion, external } = formulario
+        let { name, coordinates, addStreet, addLocaly, addRegion, external } = formulario
         let response={}
-        console.log(typeof external);
         if (!!name && name.trim() != "") {
             if (!!coordinates && coordinates.length === 2) {
                 if (!!addStreet && addStreet.trim() != "") {
-                    if (!!addlocaly && addlocaly.trim() != "") {
+                    if (!!addLocaly && addLocaly.trim() != "") {
                         if (!!addRegion && addRegion.trim() != "") {
                             if (external != undefined && typeof external === "boolean") {
                                 response = await this.apiEstaciones.postEstacion(formulario)
@@ -34,7 +33,7 @@ class ControladorEstaciones {
                         }
                     } else {
                         response.status = 404
-                        response.mensaje = "addlocaly vacio o nulo"
+                        response.mensaje = "addLocaly vacio o nulo"
                     }
                 } else {
                     response.status = 404
@@ -56,7 +55,9 @@ class ControladorEstaciones {
     }
 
     suspenderEstacion = async (req, res) => {
-        res.json({})
+        let {id} = req.params
+        const response = await this.apiEstaciones.suspenderEstacion(id)
+        res.status(response.status).json(response.mensaje)
     }
 
     habilitarEstacion = async (req, res) => {
