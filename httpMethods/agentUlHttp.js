@@ -15,6 +15,7 @@ class AgentUlHttp {
         this.urlCb = "http://orion:1026"
         this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
         this.resource = "/iot/d"
+        this.protocolo = "urn:ngsi-ld:"
     }
 
     async getAgentStatus() {
@@ -101,7 +102,9 @@ class AgentUlHttp {
         try{
             let respuesta = await axios.post(this.url + "/devices", body , this.config)
             return {status : respuesta.status , 
-                   mensaje : "Se agrego exitosamente el device " + id}
+                   mensaje : {
+                    id: this.protocolo + id
+                   }}
         }catch(e){
             return {status : e.response.status , 
                     mensaje : e.response.data.name}
