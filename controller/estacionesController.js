@@ -65,6 +65,11 @@ class ControladorEstaciones {
         const response = await this.apiEstaciones.habilitarEstacion(id)
         res.status(response.status).json(response.mensaje)
     }
+    getEstacionesPropias = async(req, res) => {
+        let {user} = req.params
+        const response = await this.apiEstaciones.getEstacionesPropias(user)
+        res.status(response.status).json(response.mensaje)
+    }
 
     getDatosConexion = async (req, res) => {
         res.json({})

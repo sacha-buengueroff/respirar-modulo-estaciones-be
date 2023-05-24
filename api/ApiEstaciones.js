@@ -35,6 +35,9 @@ class ApiEstaciones {
     habilitarEstacion = async (id) =>{
         return this.AgentUlHttp.habilitarEstacion(id)
     }
+    getEstacionesPropias= async (user) =>{
+        return this.cbHttp.getEstacionesPropias(user)
+    }
 }
 
 export default ApiEstaciones
