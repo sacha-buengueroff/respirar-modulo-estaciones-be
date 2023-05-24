@@ -1,5 +1,6 @@
 import axios from 'axios'
 import CbHttp from '../httpMethods/cbHttp.js'
+import { AxiosError } from 'axios'
 
 class AgentUlHttp {
 
@@ -145,21 +146,61 @@ class AgentUlHttp {
             console.log("Service previamente creado")
         }
     }
-    async suspenderEstacion(id){
+    async suspenderEstacion(id) {
         try {
             await this.cbHttp.suspenderEstacion(id)
-            id=id.split(":").slice(2).join("")
-            const respuesta=await axios.delete(this.url + "/devices"+ "/" + id, this.config)
+            id = id.split(":").slice(2).join("")
+            const respuesta = await axios.delete(this.url + "/devices" + "/" + id, this.config)
             return {
-                status:respuesta.status,
-                mensaje: "se suspendio correctamente el device "+ id
+                status: respuesta.status,
+                mensaje: "se suspendio correctamente el device " + id
             }
         } catch (e) {
-           return {
+            return {
                 status: e.response.status,
                 mensaje: "Error al suspender el device " + id
             }
         }
+    }
+    async habilitarEstacion(id) {
+        try {
+            let estacion = await this.cbHttp.getEstaciones(id)
+            estacion = estacion.mensaje;
+            let formulario = {
+                id: estacion.id.split(":").slice(2).join(""),
+                entityName: estacion.id,
+                name: estacion.ownerId.value,
+                coordinates: estacion.location.value.coordinates,
+                addStreet: estacion.address.value.address.streetAddress,
+                addLocaly: estacion.address.value.address.addressLocality,
+                addRegion: estacion.address.value.address.addressRegion,
+                external: (estacion.dataProvider.value != "Respirar")
+            }
+            var respuesta = await this.postEstacion(formulario)
+            if (respuesta.status > 199 && respuesta.status < 300) {
+                return {
+                    status: respuesta.status,
+                    mensaje: "se habilito correctamente el device " + id
+                }
+            } else {
+                const axiosError = {
+                    isAxiosError: true,
+                    response: {
+                        status: respuesta.status,
+                        data: { message: 'Recurso no encontrado' },
+                    }
+                }
+                throw axiosError
+            }
+
+        } catch (e) {
+            return {
+                status: e.response.status,
+                mensaje: "Error al habilitar el device " + id
+            }
+        }
+
+
     }
 }
 

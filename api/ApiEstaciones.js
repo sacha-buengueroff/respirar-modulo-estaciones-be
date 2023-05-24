@@ -32,7 +32,9 @@ class ApiEstaciones {
     suspenderEstacion = async (id) =>{
         return this.AgentUlHttp.suspenderEstacion(id)
     }
-
+    habilitarEstacion = async (id) =>{
+        return this.AgentUlHttp.habilitarEstacion(id)
+    }
 }
 
 export default ApiEstaciones
