@@ -105,18 +105,18 @@ class AgentUlHttp {
                 }
             ]
         }
-
-        try {
-            let respuesta = await axios.post(this.url + "/devices", body, this.config)
+   
+        try{
+            let respuesta = await axios.post(this.url + "/devices", body , this.config)
             return {
                 status: respuesta.status,
-                mensaje: "Se agrego exitosamente el device " + id
+                mensaje: {
+                    id: entityName
+                }
             }
-        } catch (e) {
-            return {
-                status: e.response.status,
-                mensaje: e.response.data.name
-            }
+        }catch(e){
+            return {status : e.response.status , 
+                    mensaje : e.response.data.name}
         }
 
 
