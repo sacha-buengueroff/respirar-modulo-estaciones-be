@@ -101,10 +101,12 @@ class AgentUlHttp {
         
         try{
             let respuesta = await axios.post(this.url + "/devices", body , this.config)
-            return {status : respuesta.status , 
-                   mensaje : {
-                    id: this.entityName
-                   }}
+            return {
+                status: respuesta.status,
+                mensaje: {
+                    id: entityName
+                }
+            }
         }catch(e){
             return {status : e.response.status , 
                     mensaje : e.response.data.name}
