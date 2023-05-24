@@ -30,12 +30,12 @@ class AgentUlHttp {
     }
 
     async postEstacion(formulario) {
-        const { name, coordinates, addStreet, addlocaly, addRegion, external, type, numberId , entityName} = formulario
+        const { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
 
         let body = {
             "devices": [
                 {
-                    "device_id": type + numberId,
+                    "device_id": id,
                     "entity_name": entityName,
                     "entity_type": this.entityType,
                     "attributes": [
@@ -103,7 +103,7 @@ class AgentUlHttp {
             let respuesta = await axios.post(this.url + "/devices", body , this.config)
             return {status : respuesta.status , 
                    mensaje : {
-                    id: this.protocolo + type + ":" + numberId
+                    id: this.entityName
                    }}
         }catch(e){
             return {status : e.response.status , 
