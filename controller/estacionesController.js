@@ -12,10 +12,17 @@ class ControladorEstaciones {
         res.status(response.status).json(response.mensaje)
     }
 
+    getEstacionesCiudad = async (req, res) => {
+        const response = await this.apiEstaciones.getEstacionesCiudad()
+        res.status(response.status).json(response.message)
+    }
+
     postEstacion = async (req, res) => {
         let formulario = req.body
         let { name, coordinates, addStreet, addlocaly, addRegion, external } = formulario
-        let response = {}
+        let response={
+            status:404
+        }
         console.log(typeof external);
         if (!!name && name.trim() != "") {
             if (!!coordinates && coordinates.length === 2) {
@@ -25,27 +32,21 @@ class ControladorEstaciones {
                             if (external != undefined && typeof external === "boolean") {
                                 response = await this.apiEstaciones.postEstacion(formulario)
                             } else {
-                                response.status = 404
                                 response.mensaje = "external vacio o no corresponde el tipo"
                             }
                         } else {
-                            response.status = 404
                             response.mensaje = "addRegion vacio o nulo"
                         }
                     } else {
-                        response.status = 404
                         response.mensaje = "addlocaly vacio o nulo"
                     }
                 } else {
-                    response.status = 404
                     response.mensaje = "addStreet vacio o nulo"
                 }
             } else {
-                response.status = 404
                 response.mensaje = "Faltan coordenadas"
             }
         } else {
-            response.status = 404
             response.mensaje = "name vacio o nulo"
         }
         res.status(response.status).json(response.mensaje)

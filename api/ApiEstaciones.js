@@ -15,6 +15,10 @@ class ApiEstaciones {
         return await this.cbHttp.getEstaciones(id)
     }
 
+    getEstacionesCiudad = async () => {
+        return await this.cbHttp.getEstacionesCiudad()
+    }
+
     postEstacion = async (formulario) => {
         // obtengo estaciones para saber la cantidad
         const estaciones = await this.cbHttp.getEstaciones()

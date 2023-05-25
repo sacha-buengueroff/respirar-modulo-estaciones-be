@@ -34,6 +34,25 @@ class CbHttp {
       
     }
 
+    getEstacionesCiudad = async () => {
+        let respuesta = {}
+        this.config.params = {
+            q : "dataProvider=='Respirar'",
+            options : "keyValues",
+            type : "AirQualityObserved"
+        }
+        
+        try {
+            let llamada = await axios.get(this.url+"v2/entities/", this.config)
+            respuesta.status = llamada.status
+            respuesta.message = llamada.data
+        } catch (error) {
+            respuesta.status = error.response.status
+            respuesta.message = error.response.data.orionError.details
+        }
+        return respuesta
+    }
+
 }
 
 export default CbHttp

@@ -10,17 +10,26 @@ export class RouterEstaciones {
     }
 
     start() {
-        /* GET Estaciones */
+        
+
+        /* GET Estaciones de Ciudad del Futuro */
+        this.router.get('/estacionesCiudad', this.controladorEstaciones.getEstacionesCiudad
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
+        */
+        )
+
+        /* GET Estaciones totales*/
         this.router.get('/:id?', this.controladorEstaciones.getEstaciones
-            /*
-            #swagger.tags = ['Estaciones']
-            #swagger.description = 'Endpoint para obtener una estación.'
-            #swagger.parameters["id?"] = {
-                in: "path",
-                required: "false"
-    
-            }
-            */
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para obtener una estación.'
+        #swagger.parameters["id?"] = {
+            in: "path",
+            required: "false"
+        }
+        */
         )
 
         /* GET Visualización de Datos de Conexión de Estación */
