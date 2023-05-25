@@ -14,36 +14,71 @@ class CbHttp {
 
     async getCbStatus() {
         try {
-            const respuesta = await axios.get(this.url + "version")
-            return respuesta.status
+            const response = await axios.get(this.url + "version")
+            return response.status
         }
         catch (e) {
             throw new Error('Context Broker no disponible');
         }
     }
 
-    getEstaciones = async(id) => {
+    getEstaciones = async (id) => {
         try {
-            const respuesta = id? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
-            return {status : respuesta.status , 
-                mensaje : respuesta.data}
+            const response = id ? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
+            return {
+                status: response.status,
+                message: response.data
+            }
         } catch (error) {
-            return {status : error.response.status , 
-                mensaje : error.response.data.name}
+            return {
+                status: error.response.status,
+                message: error.response.data.name
+            }
         }
-      
+
     }
+
+    suspenderEstacion = async (id) => {
+        let body = {
+            "enable": {
+                "value": false,
+                "type": "Boolean"
+            }
+        }
+        await axios.patch(this.url + "v2/entities/" + id + "/attrs/", body, this.config)
+    }
+
+    getEstacionesPorUsuario = async (user) => {
+        this.config.params = {
+            q: "ownerId=='urn:ngsi-ld:" + user + "'",
+            options: "keyValues",
+            type: "AirQualityObserved"
+        }
+        try {
+            let response = await axios.get(this.url + "v2/entities/", this.config)
+            return {
+                status: response.status,
+                message: response.data
+            }
+        } catch (error) {
+            return {
+                status: error.status,
+                message: "No se encontraron estaciones con el usuario " + user
+            }
+        }
+    }
+
 
     getEstacionesCiudad = async () => {
         let respuesta = {}
         this.config.params = {
-            q : "dataProvider=='Respirar'",
-            options : "keyValues",
-            type : "AirQualityObserved"
+            q: "dataProvider=='Respirar'",
+            options: "keyValues",
+            type: "AirQualityObserved"
         }
-        
+
         try {
-            let llamada = await axios.get(this.url+"v2/entities/", this.config)
+            let llamada = await axios.get(this.url + "v2/entities/", this.config)
             respuesta.status = llamada.status
             respuesta.message = llamada.data
         } catch (error) {

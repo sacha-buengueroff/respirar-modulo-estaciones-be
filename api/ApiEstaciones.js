@@ -33,7 +33,15 @@ class ApiEstaciones {
         // TODO Envio de mail(si es externo)
 
     }
-
+    suspenderEstacion = async (id) =>{
+        return this.AgentUlHttp.suspenderEstacion(id)
+    }
+    habilitarEstacion = async (id) =>{
+        return this.AgentUlHttp.habilitarEstacion(id)
+    }
+    getEstacionesPorUsuario= async (user) =>{
+        return this.cbHttp.getEstacionesPorUsuario(user)
+    }
 }
 
 export default ApiEstaciones
