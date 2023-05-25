@@ -32,7 +32,6 @@ class AgentUlHttp {
 
     async postEstacion(form) {
         const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = form
-
         let body = {
             "devices": [
                 {
@@ -109,7 +108,7 @@ class AgentUlHttp {
             let respuesta = await axios.post(this.url + "/devices", body, this.config)
             return {
                 status: respuesta.status,
-                mensaje: {
+                message: {
                     id: entityName,
                     mailId: id
                 }
@@ -118,7 +117,7 @@ class AgentUlHttp {
         } catch (e) {
             return {
                 status: e.response.status,
-                mensaje: e.response.data.name
+                message: e.response.data.name
             }
         }
     }

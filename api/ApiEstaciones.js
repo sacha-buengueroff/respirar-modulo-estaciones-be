@@ -22,7 +22,7 @@ class ApiEstaciones {
     postEstacion = async (formulario) => {
         // obtengo estaciones para saber la cantidad
         const estaciones = await this.cbHttp.getEstaciones()
-        let numberId = (estaciones.mensaje.length + 1)
+        let numberId = (estaciones.message.length + 1)
 
         // Concatenacion
         formulario.id = this.type + numberId
@@ -31,7 +31,8 @@ class ApiEstaciones {
 
         var response = await this.AgentUlHttp.postEstacion(formulario)
         if (formulario.external) {
-            await Mailer.enviarMail(formulario.email, response.mensaje.mailId)
+            console.log(formulario.email+"  "+response.message.mailId);
+            await Mailer.enviarMail(formulario.email, response.message.mailId)
 
         }
 
@@ -47,5 +48,5 @@ class ApiEstaciones {
     getEstacionesPorUsuario= async (user) =>{
         return this.cbHttp.getEstacionesPorUsuario(user)
     }
-
+}
 export default ApiEstaciones
