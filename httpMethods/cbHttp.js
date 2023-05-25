@@ -34,6 +34,22 @@ class CbHttp {
       
     }
 
+    getEstacionesCiudad = async () => {
+        let respuesta = {}
+        this.config.params = {
+            q : concat('external=false&options=keyValues&type=AirQualityObserved')
+        }
+        try {
+            let llamada = await axios.get(this.url, this.config)
+            respuesta.status = llamada.status
+            respuesta.message = llamada.data
+        } catch (error) {
+            respuesta.status = llamada.status
+            respuesta.message = llamada.data
+        }
+        return respuesta
+    }
+
 }
 
 export default CbHttp
