@@ -14,7 +14,7 @@ class ControladorEstaciones {
 
     getEstacionesCiudad = async (req, res) => {
         const response = await this.apiEstaciones.getEstacionesCiudad()
-        res.status(response.status).json(response.mensaje)
+        res.status(response.status).json(response.message)
     }
 
     postEstacion = async (req, res) => {
