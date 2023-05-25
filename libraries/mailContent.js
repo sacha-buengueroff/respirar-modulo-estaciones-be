@@ -1,6 +1,6 @@
 const mailHtml = (idDevice) => {
-  var url = `http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=${idDevice}`
-  var mailHtml = `<html xmlns:v="urn:schemas-microsoft-com:vml">
+    var url = `http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=${idDevice}`
+    var mailHtml = `<html xmlns:v="urn:schemas-microsoft-com:vml">
 
   <head>
       <title></title>
@@ -659,6 +659,20 @@ const mailHtml = (idDevice) => {
                                                                                   <li>pm10</li>
                                                                                   <li>pm25</li>
                                                                               </ul>
+
+                                                                              <br>
+  
+                                                                              <p
+                                                                                  style="color: rgb(51, 51, 51); font-family: Helvetica, Arial, sans-serif; font-size: 18px; line-height: 125%; font-weight: 400; text-align: left;">
+                                                                                  Ejemplo de body de la request:</p>
+                                                                            
+                                                                              <br>
+  
+                                                                              <p
+                                                                                  style="color: rgb(51, 51, 51); font-family: Helvetica, Arial, sans-serif; font-size: 18px; line-height: 125%; font-weight: 400; text-align: left;">
+                                                                                  r|1|t|22|pm1|10|pm10|5|pm25|5</p>
+
+                                                                            
                                                                           </div>
                                                                       </div>
                                                                   </div>
@@ -857,7 +871,7 @@ const mailHtml = (idDevice) => {
   </body>
   
   </html>`
-  return mailHtml
+    return mailHtml
 }
 
 export default mailHtml
