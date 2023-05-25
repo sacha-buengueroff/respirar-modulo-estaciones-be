@@ -14,8 +14,8 @@ class CbHttp {
 
     async getCbStatus() {
         try {
-            const respuesta = await axios.get(this.url + "version")
-            return respuesta.status
+            const response = await axios.get(this.url + "version")
+            return response.status
         }
         catch (e) {
             throw new Error('Context Broker no disponible');
@@ -24,15 +24,15 @@ class CbHttp {
 
     getEstaciones = async (id) => {
         try {
-            const respuesta = id ? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
+            const response = id ? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
             return {
-                status: respuesta.status,
-                mensaje: respuesta.data
+                status: response.status,
+                message: response.data
             }
         } catch (error) {
             return {
                 status: error.response.status,
-                mensaje: error.response.data.name
+                message: error.response.data.name
             }
         }
 
@@ -46,17 +46,17 @@ class CbHttp {
         }
         await axios.patch(this.url + "v2/entities/" + id + "/attrs/", body, this.config)
     }
-    getEstacionesPropias = async (user) => {
+    getEstacionesPorUsuario = async (user) => {
         try {
-            let respuesta = await axios.get(this.url + "v2/entities/?q=ownerId=='urn:ngsi-ld:" + user + "'&options=keyValues&type=AirQualityObserved", this.config)
+            let response = await axios.get(this.url + "v2/entities/?q=ownerId=='urn:ngsi-ld:" + user + "'&options=keyValues&type=AirQualityObserved", this.config)
             return {
-                status: respuesta.status,
-                mensaje: respuesta.data
+                status: response.status,
+                message: response.data
             }
         } catch (error) {
             return {
-                status: respuesta.status,
-                mensaje: "No se encontraron estaciones con el usuario "+ user
+                status: error.status,
+                message: "No se encontraron estaciones con el usuario "+ user
             }
         }
 

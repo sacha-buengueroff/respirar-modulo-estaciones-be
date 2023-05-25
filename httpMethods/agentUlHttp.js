@@ -1,6 +1,5 @@
 import axios from 'axios'
 import CbHttp from '../httpMethods/cbHttp.js'
-import { AxiosError } from 'axios'
 
 class AgentUlHttp {
 
@@ -23,16 +22,16 @@ class AgentUlHttp {
     async getAgentStatus() {
 
         try {
-            const respuesta = await axios.get(this.url + "/about")
-            return respuesta.status
+            const response = await axios.get(this.url + "/about")
+            return response.status
         }
         catch (e) {
             throw new Error('Imagen IotAgent no esta disponible');
         }
     }
 
-    async postEstacion(formulario) {
-        const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = formulario
+    async postEstacion(form) {
+        const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = form
 
         let body = {
             "devices": [
@@ -107,15 +106,15 @@ class AgentUlHttp {
         }
 
         try {
-            let respuesta = await axios.post(this.url + "/devices", body, this.config)
+            let response = await axios.post(this.url + "/devices", body, this.config)
             return {
-                status: respuesta.status,
-                mensaje: "Se agrego exitosamente el device " + id
+                status: response.status,
+                message: "Se agrego exitosamente el device " + id
             }
         } catch (e) {
             return {
                 status: e.response.status,
-                mensaje: e.response.data.name
+                message: e.response.data.name
             }
         }
 
@@ -137,8 +136,8 @@ class AgentUlHttp {
             ]
         }
         try {
-            const respuesta = await axios.post(this.url + "/services", body, this.config)
-            return respuesta.status
+            const response = await axios.post(this.url + "/services", body, this.config)
+            return response.status
         } catch (e) {
             if (e.response.status !== 409) {
                 throw new Error('Imagen IotAgent no esta disponible');
@@ -150,23 +149,23 @@ class AgentUlHttp {
         try {
             await this.cbHttp.suspenderEstacion(id)
             id = id.split(":").slice(2).join("")
-            const respuesta = await axios.delete(this.url + "/devices" + "/" + id, this.config)
+            const response = await axios.delete(this.url + "/devices" + "/" + id, this.config)
             return {
-                status: respuesta.status,
-                mensaje: "se suspendio correctamente el device " + id
+                status: response.status,
+                message: "Se suspendio correctamente el dispositivo " + id
             }
         } catch (e) {
             return {
                 status: e.response.status,
-                mensaje: "Error al suspender el device " + id
+                message: "Error al suspender el dispositivo " + id
             }
         }
     }
     async habilitarEstacion(id) {
         try {
             let estacion = await this.cbHttp.getEstaciones(id)
-            estacion = estacion.mensaje;
-            let formulario = {
+            estacion = estacion.message;
+            let form = {
                 id: estacion.id.split(":").slice(2).join(""),
                 entityName: estacion.id,
                 name: estacion.ownerId.value,
@@ -176,17 +175,17 @@ class AgentUlHttp {
                 addRegion: estacion.address.value.address.addressRegion,
                 external: (estacion.dataProvider.value != "Respirar")
             }
-            var respuesta = await this.postEstacion(formulario)
-            if (respuesta.status > 199 && respuesta.status < 300) {
+            var response = await this.postEstacion(form)
+            if (response.status > 199 && response.status < 300) {
                 return {
-                    status: respuesta.status,
-                    mensaje: "se habilito correctamente el device " + id
+                    status: response.status,
+                    message: "Se habilito correctamente el dispositivo " + id
                 }
             } else {
                 const axiosError = {
                     isAxiosError: true,
                     response: {
-                        status: respuesta.status,
+                        status: response.status,
                         data: { message: 'Recurso no encontrado' },
                     }
                 }
@@ -196,7 +195,7 @@ class AgentUlHttp {
         } catch (e) {
             return {
                 status: e.response.status,
-                mensaje: "Error al habilitar el device " + id
+                message: "Error al habilitar el dispositivo " + id
             }
         }
 
