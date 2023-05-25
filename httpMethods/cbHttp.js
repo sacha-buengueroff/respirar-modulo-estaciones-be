@@ -37,6 +37,7 @@ class CbHttp {
         }
 
     }
+
     suspenderEstacion = async (id) => {
         let body = {
             "enable": {
@@ -46,9 +47,15 @@ class CbHttp {
         }
         await axios.patch(this.url + "v2/entities/" + id + "/attrs/", body, this.config)
     }
+
     getEstacionesPorUsuario = async (user) => {
+        this.config.params = {
+            q: "ownerId=='urn:ngsi-ld:" + user + "'",
+            options: "keyValues",
+            type: "AirQualityObserved"
+        }
         try {
-            let response = await axios.get(this.url + "v2/entities/?q=ownerId=='urn:ngsi-ld:" + user + "'&options=keyValues&type=AirQualityObserved", this.config)
+            let response = await axios.get(this.url + "v2/entities/", this.config)
             return {
                 status: response.status,
                 message: response.data
@@ -56,21 +63,22 @@ class CbHttp {
         } catch (error) {
             return {
                 status: error.status,
-                message: "No se encontraron estaciones con el usuario "+ user
+                message: "No se encontraron estaciones con el usuario " + user
             }
         }
+    }
 
 
     getEstacionesCiudad = async () => {
         let respuesta = {}
         this.config.params = {
-            q : "dataProvider=='Respirar'",
-            options : "keyValues",
-            type : "AirQualityObserved"
+            q: "dataProvider=='Respirar'",
+            options: "keyValues",
+            type: "AirQualityObserved"
         }
-        
+
         try {
-            let llamada = await axios.get(this.url+"v2/entities/", this.config)
+            let llamada = await axios.get(this.url + "v2/entities/", this.config)
             respuesta.status = llamada.status
             respuesta.message = llamada.data
         } catch (error) {

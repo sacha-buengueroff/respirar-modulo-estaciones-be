@@ -64,7 +64,7 @@ class AgentUlHttp {
                             "object_id": "pm1",
                             "name": "pm1",
                             "type": "Float"
-                        },
+                        }
                     ],
                     "static_attributes": [
                         {
@@ -104,8 +104,8 @@ class AgentUlHttp {
                 }
             ]
         }
-        try{
-            let respuesta = await axios.post(this.url + "/devices", body , this.config)
+        try {
+            let respuesta = await axios.post(this.url + "/devices", body, this.config)
             return {
                 status: respuesta.status,
                 mensaje: {
@@ -113,9 +113,11 @@ class AgentUlHttp {
                 }
 
             }
-        }catch(e){
-            return {status : e.response.status , 
-                    mensaje : e.response.data.name}
+        } catch (e) {
+            return {
+                status: e.response.status,
+                mensaje: e.response.data.name
+            }
         }
     }
     async createService() {
