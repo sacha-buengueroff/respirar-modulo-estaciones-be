@@ -111,6 +111,23 @@
         "responses": {}
       }
     },
+    "/estaciones/enviarMail/{email}": {
+      "post": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para enviar mail de prueba",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/solicitudes/{idSolicitud?}": {
       "get": {
         "tags": [

@@ -1,5 +1,6 @@
 import AgentUlHttp from '../httpMethods/agentUlHttp.js'
 import CbHttp from '../httpMethods/cbHttp.js'
+import Mailer from '../libraries/mailer.js'
 
 class ApiEstaciones {
 
@@ -18,18 +19,20 @@ class ApiEstaciones {
         // obtengo estaciones para saber la cantidad
         const estaciones = await this.cbHttp.getEstaciones()
         let numberId = (estaciones.mensaje.length + 1)
-        
+
         // Concatenacion
         formulario.id = this.type + numberId
         formulario.entityName = this.protocolo + this.type + ":" + numberId
         formulario.name = this.protocolo + formulario.name
 
-        return this.AgentUlHttp.postEstacion(formulario)
+        var response = await this.AgentUlHttp.postEstacion(formulario)
+        if (formulario.external) {
+            await Mailer.enviarMail(formulario.email, response.mensaje.mailId)
 
-        // TODO Envio de mail(si es externo)
+        }
 
+        return response
     }
-
 }
 
 export default ApiEstaciones

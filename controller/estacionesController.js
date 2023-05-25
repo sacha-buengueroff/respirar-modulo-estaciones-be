@@ -15,7 +15,7 @@ class ControladorEstaciones {
     postEstacion = async (req, res) => {
         let formulario = req.body
         let { name, coordinates, addStreet, addlocaly, addRegion, external } = formulario
-        let response={}
+        let response = {}
         console.log(typeof external);
         if (!!name && name.trim() != "") {
             if (!!coordinates && coordinates.length === 2) {

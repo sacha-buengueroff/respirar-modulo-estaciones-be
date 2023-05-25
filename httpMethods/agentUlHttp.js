@@ -29,7 +29,7 @@ class AgentUlHttp {
     }
 
     async postEstacion(formulario) {
-        const { name, coordinates, addStreet, addlocaly, addRegion, external, id , entityName} = formulario
+        const { name, coordinates, addStreet, addlocaly, addRegion, external, id, entityName } = formulario
 
         let body = {
             "devices": [
@@ -68,7 +68,7 @@ class AgentUlHttp {
                         {
                             "name": "dataProvider",
                             "type": "String",
-                            "value": external?"External":"Respirar"
+                            "value": external ? "External" : "Respirar"
                         },
                         {
                             "name": "ownerId",
@@ -79,7 +79,7 @@ class AgentUlHttp {
                             "name": "location",
                             "type": "Point",
                             "value": {
-                                "coordinates": coordinates    
+                                "coordinates": coordinates
                             }
                         },
                         {
@@ -97,47 +97,50 @@ class AgentUlHttp {
                 }
             ]
         }
-        
-        try{
-            let respuesta = await axios.post(this.url + "/devices", body , this.config)
+
+        try {
+            let respuesta = await axios.post(this.url + "/devices", body, this.config)
             return {
                 status: respuesta.status,
                 mensaje: {
-                    id: entityName
+                    id: entityName,
+                    mailId: id
                 }
             }
-        }catch(e){
-            return {status : e.response.status , 
-                    mensaje : e.response.data.name}
+        } catch (e) {
+            return {
+                status: e.response.status,
+                mensaje: e.response.data.name
+            }
         }
-            
-        
+
+
 
 
     }
 
     async createService() {
 
-    const body = {
-        "services": [
-            {
-                "apikey": this.apikey,
-                "cbroker": this.urlCb,
-                "entity_type": this.entityType,
-                "resource": this.resource
-            }
-        ]
-    }
-    try {
-        const respuesta = await axios.post(this.url + "/services", body, this.config)
-        return respuesta.status
-    } catch (e) {
-        if (e.response.status !== 409) {
-            throw new Error('Imagen IotAgent no esta disponible');
+        const body = {
+            "services": [
+                {
+                    "apikey": this.apikey,
+                    "cbroker": this.urlCb,
+                    "entity_type": this.entityType,
+                    "resource": this.resource
+                }
+            ]
         }
-        console.log("Service previamente creado")
+        try {
+            const respuesta = await axios.post(this.url + "/services", body, this.config)
+            return respuesta.status
+        } catch (e) {
+            if (e.response.status !== 409) {
+                throw new Error('Imagen IotAgent no esta disponible');
+            }
+            console.log("Service previamente creado")
+        }
     }
-}
 }
 
 export default AgentUlHttp
