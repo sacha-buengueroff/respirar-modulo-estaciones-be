@@ -1,8 +1,10 @@
 import axios from 'axios'
+import CbHttp from '../httpMethods/cbHttp.js'
 
 class AgentUlHttp {
 
     constructor() {
+        this.cbHttp = new CbHttp()
         this.url = "http://localhost:4041/iot"
         this.config = {
             headers: {
@@ -20,16 +22,16 @@ class AgentUlHttp {
     async getAgentStatus() {
 
         try {
-            const respuesta = await axios.get(this.url + "/about")
-            return respuesta.status
+            const response = await axios.get(this.url + "/about")
+            return response.status
         }
         catch (e) {
             throw new Error('Imagen IotAgent no esta disponible');
         }
     }
 
-    async postEstacion(formulario) {
-        const { name, coordinates, addStreet, addlocaly, addRegion, external, id, entityName } = formulario
+    async postEstacion(form) {
+        const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = form
 
         let body = {
             "devices": [
@@ -71,6 +73,11 @@ class AgentUlHttp {
                             "value": external ? "External" : "Respirar"
                         },
                         {
+                            "name": "enable",
+                            "type": "Boolean",
+                            "value": true
+                        },
+                        {
                             "name": "ownerId",
                             "type": "String",
                             "value": name
@@ -88,7 +95,7 @@ class AgentUlHttp {
                             "value": {
                                 "address": {
                                     "streetAddress": addStreet,
-                                    "addressLocality": addlocaly,
+                                    "addressLocality": addLocaly,
                                     "addressRegion": addRegion
                                 }
                             }
@@ -97,7 +104,7 @@ class AgentUlHttp {
                 }
             ]
         }
-
+        
         try {
             let respuesta = await axios.post(this.url + "/devices", body, this.config)
             return {
@@ -106,6 +113,7 @@ class AgentUlHttp {
                     id: entityName,
                     mailId: id
                 }
+
             }
         } catch (e) {
             return {
@@ -113,12 +121,7 @@ class AgentUlHttp {
                 mensaje: e.response.data.name
             }
         }
-
-
-
-
     }
-
     async createService() {
 
         const body = {
@@ -132,14 +135,70 @@ class AgentUlHttp {
             ]
         }
         try {
-            const respuesta = await axios.post(this.url + "/services", body, this.config)
-            return respuesta.status
+            const response = await axios.post(this.url + "/services", body, this.config)
+            return response.status
         } catch (e) {
             if (e.response.status !== 409) {
                 throw new Error('Imagen IotAgent no esta disponible');
             }
             console.log("Service previamente creado")
         }
+    }
+    async suspenderEstacion(id) {
+        try {
+            await this.cbHttp.suspenderEstacion(id)
+            id = id.split(":").slice(2).join("")
+            const response = await axios.delete(this.url + "/devices" + "/" + id, this.config)
+            return {
+                status: response.status,
+                message: "Se suspendio correctamente el dispositivo " + id
+            }
+        } catch (e) {
+            return {
+                status: e.response.status,
+                message: "Error al suspender el dispositivo " + id
+            }
+        }
+    }
+    async habilitarEstacion(id) {
+        try {
+            let estacion = await this.cbHttp.getEstaciones(id)
+            estacion = estacion.message;
+            let form = {
+                id: estacion.id.split(":").slice(2).join(""),
+                entityName: estacion.id,
+                name: estacion.ownerId.value,
+                coordinates: estacion.location.value.coordinates,
+                addStreet: estacion.address.value.address.streetAddress,
+                addLocaly: estacion.address.value.address.addressLocality,
+                addRegion: estacion.address.value.address.addressRegion,
+                external: (estacion.dataProvider.value != "Respirar")
+            }
+            var response = await this.postEstacion(form)
+            if (response.status > 199 && response.status < 300) {
+                return {
+                    status: response.status,
+                    message: "Se habilito correctamente el dispositivo " + id
+                }
+            } else {
+                const axiosError = {
+                    isAxiosError: true,
+                    response: {
+                        status: response.status,
+                        data: { message: 'Recurso no encontrado' },
+                    }
+                }
+                throw axiosError
+            }
+
+        } catch (e) {
+            return {
+                status: e.response.status,
+                message: "Error al habilitar el dispositivo " + id
+            }
+        }
+
+
     }
 }
 

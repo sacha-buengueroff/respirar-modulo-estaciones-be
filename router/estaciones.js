@@ -91,7 +91,8 @@ export class RouterEstaciones {
             }
             */
         )
-
+        this.router.get('/porUsuario/:user', this.controladorEstaciones.getEstacionesPorUsuario)
+      
         return this.router
     }
 }
