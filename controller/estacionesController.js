@@ -12,6 +12,11 @@ class ControladorEstaciones {
         res.status(response.status).json(response.message)
     }
 
+    getEstacionesCiudad = async (req, res) => {
+        const response = await this.apiEstaciones.getEstacionesCiudad()
+        res.status(response.status).json(response.message)
+    }
+
     postEstacion = async (req, res) => {
         let form = req.body
         let { name, coordinates, addStreet, addLocaly, addRegion, external } = form
@@ -46,6 +51,7 @@ class ControladorEstaciones {
         } else {
             response.status = 404
             response.message = "El parametro nombre de usuario se encuentra vacio o nulo"
+
         }
         res.status(response.status).json(response.message)
     }

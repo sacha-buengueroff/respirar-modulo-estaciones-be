@@ -10,7 +10,17 @@ export class RouterEstaciones {
     }
 
     start() {
-        /* GET Estaciones */
+        
+
+        /* GET Estaciones de Ciudad del Futuro */
+        this.router.get('/estacionesCiudad', this.controladorEstaciones.getEstacionesCiudad
+        /*
+        #swagger.tags = ['Estaciones']
+        #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
+        */
+        )
+
+        /* GET Estaciones totales*/
         this.router.get('/:id?', this.controladorEstaciones.getEstaciones
         /*
         #swagger.tags = ['Estaciones']
@@ -18,7 +28,6 @@ export class RouterEstaciones {
         #swagger.parameters["id?"] = {
             in: "path",
             required: "false"
-
         }
         */
         )
@@ -34,7 +43,7 @@ export class RouterEstaciones {
         }
         */
         )
-        
+
         /* PUT Suspender Estación */
         this.router.put('/suspenderEstacion/:id', this.controladorEstaciones.suspenderEstacion
         /*
