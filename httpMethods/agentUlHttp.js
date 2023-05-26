@@ -32,7 +32,6 @@ class AgentUlHttp {
 
     async postEstacion(form) {
         const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = form
-
         let body = {
             "devices": [
                 {

@@ -31,6 +31,7 @@ class ApiEstaciones {
 
         var response = await this.AgentUlHttp.postEstacion(formulario)
         if (formulario.external) {
+            console.log(formulario.email+"  "+response.message.mailId);
             await Mailer.enviarMail(formulario.email, response.message.mailId)
 
         }
