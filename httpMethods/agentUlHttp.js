@@ -104,12 +104,12 @@ class AgentUlHttp {
                 }
             ]
         }
-        
+
         try {
             let respuesta = await axios.post(this.url + "/devices", body, this.config)
             return {
                 status: respuesta.status,
-                mensaje: {
+                message: {
                     id: entityName,
                     mailId: id
                 }
@@ -118,7 +118,7 @@ class AgentUlHttp {
         } catch (e) {
             return {
                 status: e.response.status,
-                mensaje: e.response.data.name
+                message: e.response.data.name
             }
         }
     }
@@ -148,7 +148,7 @@ class AgentUlHttp {
         try {
             await this.cbHttp.suspenderEstacion(id)
             id = id.split(":").slice(2).join("")
-            const response = await axios.delete(this.url + "/devices" + "/" + id, this.config)
+            const response = await axios.delete(this.url + "/devices/" + id, this.config)
             return {
                 status: response.status,
                 message: "Se suspendio correctamente el dispositivo " + id
