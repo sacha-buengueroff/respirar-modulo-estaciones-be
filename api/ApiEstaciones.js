@@ -39,14 +39,15 @@ class ApiEstaciones {
         return response
     }
 
-    suspenderEstacion = async (id) =>{
+    suspenderEstacion = async (id) => {
         return this.AgentUlHttp.suspenderEstacion(id)
     }
-    habilitarEstacion = async (id) =>{
+    habilitarEstacion = async (id) => {
         return this.AgentUlHttp.habilitarEstacion(id)
     }
-    getEstacionesPorUsuario= async (user) =>{
+    getEstacionesPorUsuario = async (user) => {
         return this.cbHttp.getEstacionesPorUsuario(user)
     }
 }
+
 export default ApiEstaciones
