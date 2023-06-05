@@ -20,7 +20,7 @@ class ApiSolicitudes {
     }
        
     eliminarSolicitud = async id => {
-        return this.solicitudesModel.deleteSolicitud(id)
+        return await this.solicitudesModel.deleteSolicitud(id)
     }
 }
 

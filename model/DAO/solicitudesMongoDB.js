@@ -7,7 +7,7 @@ class SolicitudesMongoDB {
     findSolicitud = async id => {
         if(!CnxMongoDB.connection) return {}
         try {
-            let solicitud = await CnxMongoDB.db.collection("solicitudes").findOne({_id: ObjectId(id)})
+            let solicitud = await CnxMongoDB.db.collection("solicitudes").findOne({_id: new ObjectId(id)})
             return solicitud
         }
         catch (error) {
@@ -40,7 +40,7 @@ class SolicitudesMongoDB {
     updateSolicitud = async (solicitud, id) => {
         if(!CnxMongoDB.connection) return {}
         try {
-            await CnxMongoDB.db.collection('solicituds').updateOne(
+            await CnxMongoDB.db.collection('solicitudes').updateOne(
                 {_id: ObjectId(id)},
                 {$set: solicitud}
             )
@@ -56,10 +56,11 @@ class SolicitudesMongoDB {
         if(!CnxMongoDB.connection) return {}
         try {
             let solicitudEliminada = await this.findSolicitud(id)
-            await CnxMongoDB.db.collection("solicitudes").deleteOne({_id: ObjectId(id)}) 
+            await CnxMongoDB.db.collection("solicitudes").deleteOne({_id: new ObjectId(id)}) 
             return solicitudEliminada
         }
         catch(error) {
+            console.log(error)
             return {error: error.message}
         }
     }
