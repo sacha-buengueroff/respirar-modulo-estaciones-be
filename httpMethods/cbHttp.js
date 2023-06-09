@@ -88,23 +88,23 @@ class CbHttp {
         return respuesta
     }
 
-    async checkSubscripcionDraco() {
+    async checkSuscripcionDraco() {
         let llamada
         try{
             llamada = await axios.get(this.url + "v2/subscriptions/")
         }catch{
-            throw new Error('Error al intentar obtener subscripción mediante Orion');
+            throw new Error('Error al intentar obtener suscripción mediante Orion');
         }
         
         // Se fija si el array devuelto contiene al menos una subscripción
         if(llamada.data.length > 0){
-            console.log("Subscripcion previamente creada")
+            console.log("Suscripción previamente creada")
         }else{
-            await this.crearSubscripcionDraco()
+            await this.crearSuscripcionDraco()
         }
     }
 
-    async crearSubscripcionDraco(){
+    async crearSuscripcionDraco(){
         const body = {
             "description": "Suscripción a cambios en todas las entidades y campos",
             "subject": {
@@ -129,9 +129,9 @@ class CbHttp {
 
         try{
             await axios.post(this.url + "v2/subscriptions/",body)
-           console.log("Subscripción a Draco creada")
+           console.log("Suscripción a Draco creada")
         }catch(e){
-            throw new Error('Error al intentar crear subscripción mediante Orion');
+            throw new Error('Error al intentar crear suscripción mediante Orion');
         }
 
     }
