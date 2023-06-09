@@ -100,7 +100,7 @@ class CbHttp {
         if(llamada.data.length > 0){
             console.log("Subscripcion previamente creada")
         }else{
-            this.crearSubscripcionDraco()
+            await this.crearSubscripcionDraco()
         }
     }
 

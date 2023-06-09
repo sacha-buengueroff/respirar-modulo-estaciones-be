@@ -22,9 +22,9 @@ class ApiCheck {
         if(await this.cbHttp.getCbStatus() != 200){
             throw new Error('Context Broker no disponible');
         }
-
+        
         //Chequea que la Subscripción  a draco este creada, si no la crea
-        this.cbHttp.checkSubscripcionDraco()
+        await this.cbHttp.checkSubscripcionDraco()
     } 
 }
 export default ApiCheck
