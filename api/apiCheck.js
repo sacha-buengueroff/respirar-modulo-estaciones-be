@@ -15,7 +15,7 @@ class ApiCheck {
         }
 
         // Chequea que el serviceGroup este creado , si no lo crea
-        this.agentHttp.createService()
+        this.agentHttp.checkService()
     }
 
     async checkCb(){

@@ -121,7 +121,7 @@ class AgentUlHttp {
             }
         }
     }
-    async createService() {
+    async checkService() {
 
         const body = {
             "services": [
