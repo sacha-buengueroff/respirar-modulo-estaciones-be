@@ -5,7 +5,7 @@ class ApiCheck {
     
     constructor(){
        this.agentHttp = new AgentUlHttp() 
-       this.cbStatus  = new CbHttp()
+       this.cbHttp  = new CbHttp()
     }
 
     async checkAgentUl(){
@@ -19,9 +19,12 @@ class ApiCheck {
     }
 
     async checkCb(){
-        if(await this.cbStatus.getCbStatus() != 200){
+        if(await this.cbHttp.getCbStatus() != 200){
             throw new Error('Context Broker no disponible');
         }
+
+        //Chequea que la Subscripción  a draco este creada, si no la crea
+        this.cbHttp.checkSubscripcionDraco()
     } 
 }
 export default ApiCheck
