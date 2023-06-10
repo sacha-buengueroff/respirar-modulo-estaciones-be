@@ -88,6 +88,55 @@ class CbHttp {
         return respuesta
     }
 
+    async checkSuscripcionDraco() {
+        let llamada
+        try{
+            llamada = await axios.get(this.url + "v2/subscriptions/")
+        }catch{
+            throw new Error('Error al intentar obtener suscripción de Draco mediante Orion');
+        }
+        
+        // Se fija si el array devuelto contiene al menos una subscripción
+        if(llamada.data.length > 0){
+            console.log("Suscripción previamente creada")
+        }else{
+            await this.crearSuscripcionDraco()
+        }
+    }
+
+    async crearSuscripcionDraco(){
+        const body = {
+            "description": "Suscripción a cambios en todas las entidades y campos",
+            "subject": {
+                "entities": [
+                    {
+                        "idPattern": ".*",
+                        "type": ".*"
+                    }
+                ],
+                "condition": {
+                    "attrs": []
+                }
+            },
+            "notification": {
+                "http": {
+                    "url": "http://localhost:5050/v2/notify"
+                },
+                "attrs": []
+            },
+            "throttling": 0
+        }
+
+        try{
+            await axios.post(this.url + "v2/subscriptions/",body)
+           console.log("Suscripción a Draco creada")
+        }catch(e){
+            throw new Error('Error al intentar crear suscripción de Draco mediante Orion');
+        }
+
+    }
+
+
 }
 
 export default CbHttp
