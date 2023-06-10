@@ -76,14 +76,6 @@ class ControladorEstaciones {
         const response = await this.apiEstaciones.getEstacionesPorUsuario(user)
         res.status(response.status).json(response.message)
     }
-
-    getDatosConexion = async (req, res) => {
-        res.json({})
-    }
-
-    putDatosConexion = async (req, res) => {
-        res.json({})
-    }
 }
 
 export default ControladorEstaciones
