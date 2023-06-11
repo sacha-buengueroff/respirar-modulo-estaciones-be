@@ -7,6 +7,7 @@ import { RouterSolicitudes } from "./router/solicitudes.js";
 import CnxMongoDB from "./model/DB.js";
 import config from "./config.js";
 import ApiCheck from "./api/apiCheck.js";
+import bodyParser from "body-parser"
 
 class Server {
     constructor(port, persistencia) {
@@ -22,6 +23,7 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+        this.app.use(bodyParser.text());
 
         /* --------------------------------------------------------------- */
         /*                             ROUTING                             */

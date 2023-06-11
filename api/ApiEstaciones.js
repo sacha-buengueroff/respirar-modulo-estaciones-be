@@ -48,6 +48,20 @@ class ApiEstaciones {
     getEstacionesPorUsuario = async (user) => {
         return this.cbHttp.getEstacionesPorUsuario(user)
     }
+
+    postDatosEstacion = async (k, i, data) => {
+        let id = i.split(this.type)[1]
+        let estacion = (await this.getDatosEstaciones(`${this.protocolo}${this.type}:${id}`)).message
+        if (estacion.enable.value) {
+            return await this.AgentUlHttp.postDatosEstacion(k, i, data)
+        } 
+        else {
+            return {
+                status: 404,
+                message: "El dispositivo está deshabilitado"
+            }
+        }
+    }
 }
 
 export default ApiEstaciones

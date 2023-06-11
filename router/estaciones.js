@@ -57,6 +57,18 @@ export class RouterEstaciones {
             */
         )
 
+        /* POST Datos Estación */
+        this.router.post('/data/', this.controladorEstaciones.postDatosEstacion
+            /*
+            #swagger.tags = ['Estaciones']
+            #swagger.description = 'Endpoint para publicar una estación.'
+            #swagger.parameters["idSolicitud?"] = {
+                in: "path",
+                required: "false"
+            }
+            */
+        )
+
         /* POST Estación */
         this.router.post('/:idSolicitud?', this.controladorEstaciones.postEstacion
             /*
@@ -68,8 +80,11 @@ export class RouterEstaciones {
             }
             */
         )
+
         this.router.get('/porUsuario/:user', this.controladorEstaciones.getEstacionesPorUsuario)
-      
+
         return this.router
+
+
     }
 }

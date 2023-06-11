@@ -1,4 +1,5 @@
-import ApiEstaciones from '../api/ApiEstaciones.js'
+import { Long } from 'mongodb'
+import ApiEstaciones from '../api/apiEstaciones.js'
 
 class ControladorEstaciones {
 
@@ -74,6 +75,13 @@ class ControladorEstaciones {
     getEstacionesPorUsuario = async (req, res) => {
         let { user } = req.params
         const response = await this.apiEstaciones.getEstacionesPorUsuario(user)
+        res.status(response.status).json(response.message)
+    }
+
+    postDatosEstacion = async (req, res) => {
+        let {k, i} = req.query
+        let data = req.body
+        const response = await this.apiEstaciones.postDatosEstacion(k, i, data)
         res.status(response.status).json(response.message)
     }
 }
