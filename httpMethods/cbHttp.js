@@ -91,7 +91,7 @@ class CbHttp {
     async checkSuscripcionDraco() {
         let llamada
         try{
-            llamada = await axios.get(this.url + "v2/subscriptions/")
+            llamada = await axios.get(this.url + "v2/subscriptions/", this.config)
         }catch{
             throw new Error('Error al intentar obtener suscripción de Draco mediante Orion');
         }
@@ -111,7 +111,7 @@ class CbHttp {
                 "entities": [
                     {
                         "idPattern": ".*",
-                        "type": ".*"
+                        "type": "AirQualityObserved"
                     }
                 ],
                 "condition": {
@@ -120,7 +120,7 @@ class CbHttp {
             },
             "notification": {
                 "http": {
-                    "url": "http://localhost:5050/v2/notify"
+                    "url": "http://draco:5050/v2/notify"
                 },
                 "attrs": []
             },
@@ -128,7 +128,7 @@ class CbHttp {
         }
 
         try{
-            await axios.post(this.url + "v2/subscriptions/",body)
+            await axios.post(this.url + "v2/subscriptions/",body, this.config)
            console.log("Suscripción a Draco creada")
         }catch(e){
             throw new Error('Error al intentar crear suscripción de Draco mediante Orion');
