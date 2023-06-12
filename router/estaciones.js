@@ -88,7 +88,7 @@ export class RouterEstaciones {
 
     /* POST Estación */
     this.router.post(
-      "/:idSolicitud?",
+      "/",
       this.controladorEstaciones.postEstacion
       /*
             #swagger.tags = ['Estaciones']
