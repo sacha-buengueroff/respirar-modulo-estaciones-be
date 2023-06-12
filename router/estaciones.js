@@ -70,14 +70,10 @@ export class RouterEstaciones {
         )
 
         /* POST Estación */
-        this.router.post('/:idSolicitud?', this.controladorEstaciones.postEstacion
+        this.router.post('/', this.controladorEstaciones.postEstacion
             /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar una estación.'
-            #swagger.parameters["idSolicitud?"] = {
-                in: "path",
-                required: "false"
-            }
             */
         )
 

@@ -1,5 +1,6 @@
 import SolicitudesFactoryDAO from '../model/DAO/solicitudesFactory.js'
 import config from '../config.js'
+import Mailer from '../libraries/mailer.js'
 
 class ApiSolicitudes {
     
@@ -20,7 +21,9 @@ class ApiSolicitudes {
     }
        
     eliminarSolicitud = async id => {
-        return await this.solicitudesModel.deleteSolicitud(id)
+        let solicitud = await this.solicitudesModel.deleteSolicitud(id)
+        await Mailer.enviarMailRechazo(solicitud.email)
+        return solicitud
     }
 }
 

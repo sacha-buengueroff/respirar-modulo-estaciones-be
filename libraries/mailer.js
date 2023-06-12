@@ -1,6 +1,6 @@
 import config from '../config.js'
 import nodemailer from 'nodemailer'
-import mailHtml from './mailContent.js'
+import { mailHtml, mailRechazoHtml } from './mailContent.js';
 
 class Mailer {
 
@@ -18,6 +18,16 @@ class Mailer {
             to: email,
             subject: "Instrucciones de conexión a RespirAR",
             html: mailHtml(idDevice)
+        }
+        return await Mailer.transporter.sendMail(mailOptions)
+    }
+
+    static async enviarMailRechazo(email) {
+        var mailOptions = {
+            from: "tripitconsultora@gmail.com",
+            to: email,
+            subject: "Lamentablemente tu solicitud fue rechazada",
+            html: mailRechazoHtml()
         }
         return await Mailer.transporter.sendMail(mailOptions)
     }
