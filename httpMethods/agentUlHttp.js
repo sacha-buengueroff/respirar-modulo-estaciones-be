@@ -13,10 +13,16 @@ class AgentUlHttp {
                 "Content-Type": "application/json"
             }
         }
+        this.postConfig = {
+            headers: {
+                "Content-Type": "text/plain"
+            }
+        }
         this.entityType = "AirQualityObserved"
         this.urlCb = "http://orion:1026"
         this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
         this.resource = "/iot/d"
+        this.urlPost = "http://localhost:7897/iot/d"
     }
 
     async getAgentStatus() {
@@ -196,8 +202,33 @@ class AgentUlHttp {
                 message: "Error al habilitar el dispositivo " + id
             }
         }
+    }
 
-
+    async postDatosEstacion(k, i, data) {
+        try {
+            let response = await axios.post(`${this.urlPost}?k=${k}&i=${i}`, data, this.postConfig)
+            if (response.status > 199 && response.status < 300) {
+                return {
+                    status: response.status,
+                    message: "Se cargaron correctamente los datos"
+                }
+            } else {
+                const axiosError = {
+                    isAxiosError: true,
+                    response: {
+                        status: response.status,
+                        data: { message: 'Error en la carga de datos' },
+                    }
+                }
+                throw axiosError
+            }
+        }
+        catch (e) {
+            return {
+                status: e.response.status,
+                message: "Error al cargar los datos del dispositivo " + i
+            }
+        }
     }
 }
 
