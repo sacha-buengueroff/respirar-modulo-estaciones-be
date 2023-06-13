@@ -34,6 +34,18 @@ export class RouterSolicitudes {
         */
         )
         /* POST Rechazo Solicitud de Inscripción de Estación */
+        this.router.delete('/rechazar/:idSolicitud', this.controladorSolicitudes.rejectSolicitud
+        /*
+        #swagger.tags = ['Solicitudes']
+        #swagger.description = 'Endpoint para eliminación de solicitudes.'
+        #swagger.parameters["idSolicitud?"] = {
+            in: "path",
+            required: "true"
+        }
+        */
+        )
+
+        /* POST Eliminar Solicitud de Inscripción de Estación */
         this.router.delete('/:idSolicitud', this.controladorSolicitudes.deleteSolicitud
         /*
         #swagger.tags = ['Solicitudes']
@@ -43,7 +55,7 @@ export class RouterSolicitudes {
             required: "true"
         }
         */
-         )
+        )
 
 
         return this.router

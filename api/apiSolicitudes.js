@@ -20,9 +20,14 @@ class ApiSolicitudes {
         return await this.solicitudesModel.updateSolicitud(solicitud, id)
     }
        
-    eliminarSolicitud = async id => {
+    rechazarSolicitud = async id => {
         let solicitud = await this.solicitudesModel.deleteSolicitud(id)
         await Mailer.enviarMailRechazo(solicitud.email)
+        return solicitud
+    }
+
+    eliminarSolicitud = async id => {
+        let solicitud = await this.solicitudesModel.deleteSolicitud(id)
         return solicitud
     }
 }
