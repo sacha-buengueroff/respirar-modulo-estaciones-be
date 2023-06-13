@@ -16,6 +16,11 @@ class ControladorSolicitudes {
         res.json(await this.apiSolicitudes.obtenerSolicitudes(idSolicitud))
     }
 
+    rejectSolicitud = async (req,res) =>{
+        const { idSolicitud } = req.params
+        res.json(await this.apiSolicitudes.rechazarSolicitud(idSolicitud))
+    }
+
     deleteSolicitud = async (req,res) =>{
         const { idSolicitud } = req.params
         res.json(await this.apiSolicitudes.eliminarSolicitud(idSolicitud))
