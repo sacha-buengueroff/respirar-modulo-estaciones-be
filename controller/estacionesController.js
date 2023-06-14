@@ -1,5 +1,5 @@
 import { Long } from 'mongodb'
-import ApiEstaciones from '../api/apiEstaciones.js'
+import ApiEstaciones from '../api/ApiEstaciones.js'
 
 class ControladorEstaciones {
 
