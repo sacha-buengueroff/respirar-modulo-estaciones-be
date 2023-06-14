@@ -3,7 +3,7 @@ import axios from 'axios'
 class CbHttp {
 
     constructor() {
-        this.url = "http://localhost:1026/"
+        this.url = "http://orion:1026/"
         this.config = {
             headers: {
                 "fiware-service": "openiot",

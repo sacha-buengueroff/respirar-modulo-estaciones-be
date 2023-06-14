@@ -5,7 +5,7 @@ class AgentUlHttp {
 
     constructor() {
         this.cbHttp = new CbHttp()
-        this.url = "http://localhost:4041/iot"
+        this.url = "http://iot-agent-ul:4041/iot"
         this.config = {
             headers: {
                 "fiware-service": "openiot",
@@ -22,7 +22,7 @@ class AgentUlHttp {
         this.urlCb = "http://orion:1026"
         this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
         this.resource = "/iot/d"
-        this.urlPost = "http://localhost:7897/iot/d"
+        this.urlPost = "http://iot-agent-ul:7897/iot/d"
     }
 
     async getAgentStatus() {
