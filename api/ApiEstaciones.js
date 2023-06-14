@@ -52,9 +52,15 @@ class ApiEstaciones {
     postDatosEstacion = async (k, i, data) => {
         let id = i.split(this.type)[1]
         let estacion = (await this.getDatosEstaciones(`${this.protocolo}${this.type}:${id}`)).message
-        if (estacion.enable.value) {
+        if (estacion && estacion.enable.value) {
             return await this.AgentUlHttp.postDatosEstacion(k, i, data)
         } 
+        else if (!estacion) {
+            return {
+                status: 404,
+                message: "El dispositivo no existe"
+            }
+        }
         else {
             return {
                 status: 404,
