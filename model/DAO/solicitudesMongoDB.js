@@ -8,10 +8,10 @@ class SolicitudesMongoDB {
         if(!CnxMongoDB.connection) return {}
         try {
             let solicitud = await CnxMongoDB.db.collection("solicitudes").findOne({_id: new ObjectId(id)})
-            return solicitud
+            return {message: solicitud, status: 200}
         }
         catch (error) {
-            return {error: error.message}
+            return {error: error.message, status: 400}
         }
     } 
     
@@ -19,10 +19,10 @@ class SolicitudesMongoDB {
         if(!CnxMongoDB.connection) return []
         try {
             let solicitudes = await CnxMongoDB.db.collection('solicitudes').find({}).toArray()
-            return solicitudes
+            return {message: solicitudes, status: 200}
         }
         catch (error){
-            return {error: error.message}
+            return {error: error.message, status: 400}
         }
     } 
     
@@ -30,10 +30,10 @@ class SolicitudesMongoDB {
         if(!CnxMongoDB.connection) return {}
         try {
             await CnxMongoDB.db.collection("solicitudes").insertOne(solicitud)
-            return solicitud
+            return {message: solicitud, status: 200}
         }
         catch (error) {
-            return {error: error.message}
+            return {error: error.message, status: 400}
         }
     }
     
@@ -45,10 +45,10 @@ class SolicitudesMongoDB {
                 {$set: solicitud}
             )
             let solicitudActualizado = await this.findSolicitud(id)
-            return solicitudActualizado
+            return {message: solicitudActualizado, status: 200}
         }
         catch(error) {
-            return {error: error.message}
+            return {error: error.message, status: 400}
         }
     }
     
@@ -57,11 +57,11 @@ class SolicitudesMongoDB {
         try {
             let solicitudEliminada = await this.findSolicitud(id)
             await CnxMongoDB.db.collection("solicitudes").deleteOne({_id: new ObjectId(id)}) 
-            return solicitudEliminada
+            return {message: solicitudEliminada, status: 200}
         }
         catch(error) {
             console.log(error)
-            return {error: error.message}
+            return {error: error.message, status: 400}
         }
     }
 }

@@ -7,23 +7,28 @@ class ControladorSolicitudes {
     }
     
     postSolicitud = async (req,res) => {
-        const solicitud = req.body 
-        res.json(await this.apiSolicitudes.guardarSolicitud(solicitud))
+        const solicitud = req.body
+        console.log(solicitud)
+        response = await this.apiSolicitudes.guardarSolicitud(solicitud)
+        res.status(response.status).json(response.message)
     }
     
     getSolicitudes = async (req,res) => {
         const { idSolicitud } = req.params
-        res.json(await this.apiSolicitudes.obtenerSolicitudes(idSolicitud))
+        response = await this.apiSolicitudes.obtenerSolicitudes(idSolicitud)
+        res.status(response.status).json(response.message)
     }
 
     rejectSolicitud = async (req,res) =>{
         const { idSolicitud } = req.params
-        res.json(await this.apiSolicitudes.rechazarSolicitud(idSolicitud))
+        response = await this.apiSolicitudes.rechazarSolicitud(idSolicitud)
+        res.status(response.status).json(response.message)
     }
 
     deleteSolicitud = async (req,res) =>{
         const { idSolicitud } = req.params
-        res.json(await this.apiSolicitudes.eliminarSolicitud(idSolicitud))
+        response = await this.apiSolicitudes.eliminarSolicitud(idSolicitud)
+        res.status(response.status).json(response.message)
     }
 }
 
