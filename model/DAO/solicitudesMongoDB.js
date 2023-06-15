@@ -57,7 +57,7 @@ class SolicitudesMongoDB {
         try {
             let solicitudEliminada = await this.findSolicitud(id)
             await CnxMongoDB.db.collection("solicitudes").deleteOne({_id: new ObjectId(id)}) 
-            return {message: solicitudEliminada, status: 200}
+            return solicitudEliminada
         }
         catch(error) {
             console.log(error)
