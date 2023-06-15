@@ -1,0 +1,233 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RespirAR Módulo EStaciones API",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/estaciones/estacionesCiudad": {
+      "get": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/estaciones/{id?}": {
+      "get": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para obtener una estación.",
+        "parameters": [
+          {
+            "name": "id?",
+            "in": "path",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/suspenderEstacion/{id}": {
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para suspender una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/habilitarEstacion/{id}": {
+      "put": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para habilitar una estación.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/data/": {
+      "post": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para publicar datos de una estación.",
+        "parameters": [
+          {
+            "name": "i",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "k",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Plain text data",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/{idSolicitud?}": {
+      "post": {
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para publicar una estación.",
+        "parameters": [
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "estacion",
+            "in": "body",
+            "description": "Datos de la estación",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "name"
+                },
+                "coordinates": {
+                  "type": "array",
+                  "example": [
+                    -29.233012401017962,
+                    136.7063500973975
+                  ],
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "addStreet": {
+                  "type": "string",
+                  "example": "Street"
+                },
+                "addLocaly": {
+                  "type": "string",
+                  "example": "Localy"
+                },
+                "addRegion": {
+                  "type": "string",
+                  "example": "Region"
+                },
+                "external": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/estaciones/porUsuario/{user}": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/solicitudes/{idSolicitud?}": {
+      "get": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para obtener un listado de solicitudes.",
+        "parameters": [
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/solicitudes/": {
+      "post": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para dar de alta una solicitud.",
+        "parameters": [
+          {
+            "name": "solicitud",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/solicitudes/{idSolicitud}": {
+      "delete": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para eliminación de solicitudes.",
+        "parameters": [
+          {
+            "name": "idSolicitud",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idSolicitud?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
