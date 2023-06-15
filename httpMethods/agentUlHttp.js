@@ -22,7 +22,7 @@ class AgentUlHttp {
         this.urlCb = "http://orion:1026"
         this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
         this.resource = "/iot/d"
-        this.urlPost = "http://localhost:7897/iot/d"
+        this.urlNorthbound = "http://localhost:7897/iot/d"
     }
 
     async getAgentStatus() {
@@ -217,7 +217,7 @@ class AgentUlHttp {
 
     async postDatosEstacion(k, i, data) {
         try {
-            let response = await axios.post(`${this.urlPost}?k=${k}&i=${i}`, data, this.postConfig)
+            let response = await axios.post(`${this.urlNorthbound}?k=${k}&i=${i}`, data, this.postConfig)
             if (response.status > 199 && response.status < 300) {
                 return {
                     status: response.status,
