@@ -9,13 +9,13 @@ class ApiCheck {
     }
 
     async checkAgentUl(){
-        // Chequea que este corriendo imagen
+        // Check if docker is up
         if(await this.agentHttp.getAgentStatus() != 200){
             throw new Error('IotAgent no esta disponible');
         }
 
-        // Chequea que el serviceGroup este creado , si no lo crea
-        this.agentHttp.checkService()
+        // Check if service group exist, else create it
+        await this.agentHttp.checkService()
     }
 
     async checkCb(){

@@ -129,7 +129,7 @@ class CbHttp {
 
         try{
             await axios.post(this.url + "v2/subscriptions/",body, this.config)
-           console.log("Suscripción a Draco creada")
+            console.log("Suscripción a Draco creada")
         }catch(e){
             throw new Error('Error al intentar crear suscripción de Draco mediante Orion');
         }

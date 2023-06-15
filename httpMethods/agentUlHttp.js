@@ -128,7 +128,21 @@ class AgentUlHttp {
         }
     }
     async checkService() {
-
+        let call
+        try{
+           call = await axios.get(this.url+ "/services/" , this.config)
+        }catch(e){
+            console.log(e)
+            throw new Error('Error al intentar obtener service group mediante agentUl');
+        }
+        // if array contains almost one service group
+        if(call.data.length > 0){
+            console.log("Service previamente creado")
+        }else{
+            await this.createService()
+        }
+    } 
+     async createService(){
         const body = {
             "services": [
                 {
@@ -140,13 +154,10 @@ class AgentUlHttp {
             ]
         }
         try {
-            const response = await axios.post(this.url + "/services", body, this.config)
-            return response.status
+            await axios.post(this.url + "/services", body, this.config)
+            console.log("Service creado")
         } catch (e) {
-            if (e.response.status !== 409) {
                 throw new Error('Imagen IotAgent no esta disponible');
-            }
-            console.log("Service previamente creado")
         }
     }
     async suspenderEstacion(id) {
