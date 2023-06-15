@@ -136,7 +136,7 @@ class AgentUlHttp {
             throw new Error('Error al intentar obtener service group mediante agentUl');
         }
         // if array contains almost one service group
-        if(call.data.length > 0){
+        if(call.data.services.length > 0){
             console.log("Service previamente creado")
         }else{
             await this.createService()
