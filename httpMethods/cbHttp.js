@@ -14,7 +14,7 @@ class CbHttp {
 
     async getCbStatus() {
         try {
-            const response = await axios.get(this.url + "version")
+            await axios.get(this.url + "version")
         }
         catch (e) {
             throw new Error('Context Broker no disponible');
