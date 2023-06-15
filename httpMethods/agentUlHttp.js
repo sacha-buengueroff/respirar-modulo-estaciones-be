@@ -28,8 +28,7 @@ class AgentUlHttp {
     async getAgentStatus() {
 
         try {
-            const response = await axios.get(this.url + "/about")
-            return response.status
+            await axios.get(this.url + "/about")
         }
         catch (e) {
             throw new Error('Imagen IotAgent no esta disponible');

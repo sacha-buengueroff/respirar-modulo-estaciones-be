@@ -15,7 +15,6 @@ class CbHttp {
     async getCbStatus() {
         try {
             const response = await axios.get(this.url + "version")
-            return response.status
         }
         catch (e) {
             throw new Error('Context Broker no disponible');
@@ -95,8 +94,7 @@ class CbHttp {
         }catch{
             throw new Error('Error al intentar obtener suscripción de Draco mediante Orion');
         }
-        
-        // Se fija si el array devuelto contiene al menos una subscripción
+          // Se fija si el array devuelto contiene al menos una subscripción
         if(llamada.data.length > 0){
             console.log("Suscripción previamente creada")
         }else{

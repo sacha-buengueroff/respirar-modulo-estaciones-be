@@ -9,7 +9,7 @@ class ApiCheck {
     }
 
     async checkAgentUl(){
-        // Check if docker is up
+        // Check if Agent Ul Docker is up
         await this.agentHttp.getAgentStatus()
 
         // Check if service group exist, else create it
@@ -17,11 +17,10 @@ class ApiCheck {
     }
 
     async checkCb(){
-        if(await this.cbHttp.getCbStatus() != 200){
-            throw new Error('Context Broker no disponible');
-        }
-
-        //Chequea que la Subscripción  a draco este creada, si no la crea
+        // Check if Context Broker Docker is up
+        await this.cbHttp.getCbStatus() 
+          
+        // Check if Draco subscription exist, else create it
         await this.cbHttp.checkSuscripcionDraco()
     } 
 }
