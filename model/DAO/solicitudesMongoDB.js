@@ -8,10 +8,13 @@ class SolicitudesMongoDB {
         if(!CnxMongoDB.connection) return {}
         try {
             let solicitud = await CnxMongoDB.db.collection("solicitudes").findOne({_id: new ObjectId(id)})
+            if (!solicitud) {
+                throw new Error("No se encontró solicitud con el id enviado")
+            }
             return {message: solicitud, status: 200}
         }
         catch (error) {
-            return {error: error.message, status: 400}
+            return {message: error.message, status: 400}
         }
     } 
     
@@ -22,7 +25,7 @@ class SolicitudesMongoDB {
             return {message: solicitudes, status: 200}
         }
         catch (error){
-            return {error: error.message, status: 400}
+            return {message: error.message, status: 400}
         }
     } 
     
@@ -33,7 +36,7 @@ class SolicitudesMongoDB {
             return {message: solicitud, status: 200}
         }
         catch (error) {
-            return {error: error.message, status: 400}
+            return {message: error.message, status: 400}
         }
     }
     
@@ -48,7 +51,7 @@ class SolicitudesMongoDB {
             return {message: solicitudActualizado, status: 200}
         }
         catch(error) {
-            return {error: error.message, status: 400}
+            return {message: error.message, status: 400}
         }
     }
     
@@ -61,7 +64,7 @@ class SolicitudesMongoDB {
         }
         catch(error) {
             console.log(error)
-            return {error: error.message, status: 400}
+            return {message: error.message, status: 400}
         }
     }
 }
