@@ -9,7 +9,7 @@ class ControladorSolicitudes {
     
     postSolicitud = async (req,res) => {
         const solicitud = req.body
-        let response = await validate(solicitud, schema_solicitud)
+        let response = validate(solicitud, schema_solicitud)
         if (Object.keys(response).length === 0) {
             response = await this.apiSolicitudes.guardarSolicitud(solicitud)
         }
