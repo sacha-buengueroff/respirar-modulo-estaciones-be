@@ -13,7 +13,6 @@ class ControladorSolicitudes {
         if (Object.keys(response).length === 0) {
             response = await this.apiSolicitudes.guardarSolicitud(solicitud)
         }
-        console.log(response);
         res.status(response.status).json(response.message)
     }
     

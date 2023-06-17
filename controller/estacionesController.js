@@ -21,11 +21,9 @@ class ControladorEstaciones {
     postEstacion = async (req, res) => {
         const estacion = req.body
         let response = await validate(estacion, schema_estacion)
-        console.log("respuesta", response);
         if (Object.keys(response).length === 0) {
             response = await this.apiEstaciones.postEstacion(estacion)
         }
-
         res.status(response.status).json(response.message)
     }
 

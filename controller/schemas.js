@@ -17,7 +17,7 @@ export const schema_estacion = {
     external: value => value != undefined && typeof value === "boolean" ? true : "El parametro external vacio o no corresponde el tipo"
 }
 
-export const validate = async (object, schema) => {
+export const validate = (object, schema) => {
     let response = {}
 
     let schema_keys = Object.keys(schema)
