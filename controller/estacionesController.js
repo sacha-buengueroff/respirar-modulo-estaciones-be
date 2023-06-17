@@ -1,5 +1,5 @@
-import { Long } from 'mongodb'
 import ApiEstaciones from '../api/apiEstaciones.js'
+import { validate, schema_estacion } from './schemas.js'
 
 class ControladorEstaciones {
 
@@ -19,40 +19,10 @@ class ControladorEstaciones {
     }
 
     postEstacion = async (req, res) => {
-        let form = req.body
-        let { name, coordinates, addStreet, addLocaly, addRegion, external } = form
-        let response = {}
-        if (!!name && name.trim() != "") {
-            if (!!coordinates && coordinates.length === 2) {
-                if (!!addStreet && addStreet.trim() != "") {
-                    if (!!addLocaly && addLocaly.trim() != "") {
-                        if (!!addRegion && addRegion.trim() != "") {
-                            if (external != undefined && typeof external === "boolean") {
-                                response = await this.apiEstaciones.postEstacion(form)
-                            } else {
-                                response.status = 404
-                                response.message = "El parametro external vacio o no corresponde el tipo"
-                            }
-                        } else {
-                            response.status = 404
-                            response.message = "El parametro region se encuentra vacio o nulo"
-                        }
-                    } else {
-                        response.status = 404
-                        response.message = "El parametro localidad se encuentra vacio o nulo"
-                    }
-                } else {
-                    response.status = 404
-                    response.message = "El parametro calle se encuentra vacio o nulo"
-                }
-            } else {
-                response.status = 404
-                response.message = "Faltan coordenadas"
-            }
-        } else {
-            response.status = 404
-            response.message = "El parametro nombre de usuario se encuentra vacio o nulo"
-
+        const estacion = req.body
+        let response = validate(estacion, schema_estacion)
+        if (Object.keys(response).length === 0) {
+            response = await this.apiEstaciones.postEstacion(estacion)
         }
         res.status(response.status).json(response.message)
     }
