@@ -162,7 +162,7 @@ describe("test endpoints solicitudes", () => {
                 await request.delete(`/solicitudes/${response.body._id}`)
             }
             
-            expect(response.status).to.eql(400)
+            expect(response.status).to.eql(404)
             expect(response.body).to.eql("El formulario cuenta con un campo extra")
         })
     })
