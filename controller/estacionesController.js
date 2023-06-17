@@ -1,5 +1,5 @@
-import { Long } from 'mongodb'
 import ApiEstaciones from '../api/apiEstaciones.js'
+import { schema_estacion } from './schemas.js'
 
 class ControladorEstaciones {
 
@@ -19,15 +19,6 @@ class ControladorEstaciones {
     }
 
     postEstacion = async (req, res) => {
-        const schema = {
-            name: value => !!value && value.trim() != "" ? true :  "El parametro nombre de usuario se encuentra vacio o nulo",
-            coordinates: value => !!value && value.length === 2 ? true : "El parametro coordenadas es invalido",
-            addStreet: value => !!value && value.trim() != "" ? true : "El parametro calle se encuentra vacio o nulo",
-            addLocaly: value => !!value && value.trim() != "" ? true : "El parametro localidad se encuentra vacio o nulo",
-            addRegion: value => !!value && value.trim() != "" ? true: "El parametro region se encuentra vacio o nulo",
-            external: value => value != undefined && typeof value === "boolean" ? true : "El parametro external vacio o no corresponde el tipo"
-        }
-
         const validate = async (object, schema) => {
             let response = {}
 
@@ -55,7 +46,7 @@ class ControladorEstaciones {
         }
 
         const solicitud = req.body
-        let response = await validate(solicitud, schema)
+        let response = await validate(solicitud, schema_estacion)
         console.log(response);
 
         res.status(response.status).json(response.message)
