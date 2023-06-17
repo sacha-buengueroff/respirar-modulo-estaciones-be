@@ -33,8 +33,8 @@ describe("test endpoints solicitudes", () => {
             let body = {
                 name: "Obelisco",
                 coordinates: [
-                    "-34.6255612",
-                    "-58.4070593"
+                    "123",
+                    "456"
                 ],
                 addStreet: "Av. 9 de Julio",
                 addLocaly: "San Nicolas",
@@ -102,8 +102,8 @@ describe("test endpoints solicitudes", () => {
             let body = {
                 name: "Obelisco",
                 coordinates: [
-                    "-34.6255612",
-                    "-58.4070593"
+                    "111",
+                    "222"
                 ],
                 addStreet: "Av. 9 de Julio",
                 addLocaly: "San Nicolas",
@@ -129,8 +129,8 @@ describe("test endpoints solicitudes", () => {
         it("Se envía una solicitud con nombre faltante", async () => {
             let body = {
                 coordinates: [
-                    "-34.6255612",
-                    "-58.4070593"
+                    "444",
+                    "555"
                 ],
                 addStreet: "Av. 9 de Julio",
                 addLocaly: "San Nicolas",
@@ -147,8 +147,8 @@ describe("test endpoints solicitudes", () => {
             let body = {
                 name: "Obelisco",
                 coordinates: [
-                    "-34.6255612",
-                    "-58.4070593"
+                    "666",
+                    "777"
                 ],
                 addStreet: "Av. 9 de Julio",
                 addLocaly: "San Nicolas",
@@ -158,12 +158,62 @@ describe("test endpoints solicitudes", () => {
                 adicional: "Este campo es adicional"
             }
             let response = await request.post("/solicitudes").send(body)
+            if (response.status == 200) {
+                await request.delete(`/solicitudes/${response.body._id}`)
+            }
+            
             expect(response.status).to.eql(400)
             expect(response.body).to.eql("El formulario cuenta con un campo extra")
         })
     })
 
     describe("DELETE", async () => {
-        it("")
+        let id;
+
+        before(async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "-34.6255612",
+                    "-58.4070593"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                external: true,
+                email: "sachabuengue@gmail.com"
+            }
+            let response = await request.post("/solicitudes").send(body)
+            id = response.body._id
+        })
+
+        after(async () => {
+            await request.delete(`/solicitudes/${id}`)
+        })
+
+        it("Se elimina una solicitud con un id equivocado", async () => {
+            let id_invalido = "aaaaaaaaaaaaaaaaaaaaaaaa"
+            let response = await request.delete(`/solicitudes/${id_invalido}`)
+
+            expect(response.status).to.eql(400)
+            expect(response.body).to.eql("No se encontró solicitud con el id enviado")
+        })
+
+        it("Se elimina una solicitud con un id valido", async () => {
+            let response = await request.delete(`/solicitudes/${id}`)
+            let solicitud = response.body
+
+            expect(response.status).to.eql(200)         
+            expect(solicitud).to.include.keys(
+                "_id",
+                "name",
+                "coordinates",
+                "addStreet",
+                "addLocaly",
+                "addRegion",
+                "external",
+                "email"
+            );
+        })
     })
 })
