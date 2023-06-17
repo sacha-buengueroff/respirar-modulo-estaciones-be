@@ -1,28 +1,29 @@
 import axios from 'axios'
 import CbHttp from '../httpMethods/cbHttp.js'
+import config from '../config.js'
 
 class AgentUlHttp {
 
     constructor() {
         this.cbHttp = new CbHttp()
-        this.url = "http://localhost:4041/iot"
+        this.url = config.AGENT_URL
         this.config = {
             headers: {
-                "fiware-service": "openiot",
-                "fiware-servicepath": "/",
-                "Content-Type": "application/json"
+                "fiware-service": config.FIWARE_SERVICE,
+                "fiware-servicepath": config.FIWARE_SERVICETYPE,
+                "Content-Type": config.CONTENT_TYPE
             }
         }
         this.postConfig = {
             headers: {
-                "Content-Type": "text/plain"
+                "Content-Type": config.CONTENT_TYPE_DATA
             }
         }
-        this.entityType = "AirQualityObserved"
-        this.urlCb = "http://orion:1026"
-        this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
-        this.resource = "/iot/d"
-        this.urlNorthbound = "http://localhost:7897/iot/d"
+        this.entityType = config.ENTITY_TYPE
+        this.urlCb = config.ORION_URL
+        this.apikey = config.APIKEY
+        this.resource = config.RESOURCE
+        this.urlNorthbound = config.AGENT_URL_NORTH
     }
 
     async getAgentStatus() {

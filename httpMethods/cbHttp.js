@@ -1,13 +1,14 @@
 import axios from 'axios'
+import config from '../config.js'
 
 class CbHttp {
 
     constructor() {
-        this.url = "http://localhost:1026/"
+        this.url = config.ORION_URL
         this.config = {
             headers: {
-                "fiware-service": "openiot",
-                "fiware-servicepath": "/"
+                "fiware-service": config.FIWARE_SERVICE,
+                "fiware-servicepath": config.FIWARE_SERVICETYPE
             }
         }
     }
