@@ -83,5 +83,26 @@ describe("test endpoints estaciones", () => {
             });
 
         })
+        it("Debería retornar la estacion especifica cuando se pasa id", async () => {
+            let response = await request.get(`/estaciones/${id_cb}`)
+            expect(response.status).to.eql(200)
+
+            let estacion = response.body;
+            expect(estacion).to.include.keys(
+                "id",
+                "type",
+                "TimeInstant",
+                "address",
+                "dataProvider",
+                "enable",
+                "location",
+                "ownerId",
+                "pm1",
+                "pm10",
+                "pm25",
+                "reliability",
+                "temperature"
+            );
+        })
     })
 })
