@@ -1,5 +1,5 @@
 import ApiEstaciones from '../api/apiEstaciones.js'
-import { validate, schema_estacion } from './schemas.js'
+import { validate, schema_estacion, schema_solicitud } from './schemas.js'
 
 class ControladorEstaciones {
 
@@ -20,7 +20,16 @@ class ControladorEstaciones {
 
     postEstacion = async (req, res) => {
         const estacion = req.body
-        let response = validate(estacion, schema_estacion)
+        let response
+        if (estacion.external != undefined && typeof estacion.external === "boolean") {
+            response = estacion.external ? validate(estacion, schema_solicitud) : validate(estacion, schema_estacion)
+        }
+        else {
+            response = {
+                message: "El parametro external vacio o no corresponde el tipo",
+                status: 404
+            }
+        }
         if (Object.keys(response).length === 0) {
             response = await this.apiEstaciones.postEstacion(estacion)
         }
