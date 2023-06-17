@@ -1,5 +1,5 @@
 import ApiEstaciones from '../api/apiEstaciones.js'
-import { schema_estacion } from './schemas.js'
+import { validate, schema_estacion } from './schemas.js'
 
 class ControladorEstaciones {
 
@@ -19,34 +19,11 @@ class ControladorEstaciones {
     }
 
     postEstacion = async (req, res) => {
-        const validate = async (object, schema) => {
-            let response = {}
-
-            let keys = Object.keys(schema)
-            let i = 0
-            let key
-            while (i < keys.length && Object.keys(response).length === 0) {
-                key = keys[i]
-                if (!object.hasOwnProperty(key)) {
-                    response.status = 400
-                    response.message = "El formulario cuenta con un campo extra"
-                }
-                else if (!object[key] === true) {
-                    response.status = 404
-                    response.message = object[key]
-                }
-                i += 1
-            }
-            
-            if (i == keys.length) {
-                response = await this.apiSolicitudes.guardarSolicitud(solicitud)
-            }
-
-            return response
-        }
-
         const solicitud = req.body
         let response = await validate(solicitud, schema_estacion)
+        if (Object.keys(response).length === 0) {
+            response = await this.apiSolicitudes.guardarSolicitud(solicitud)
+        }
         console.log(response);
 
         res.status(response.status).json(response.message)

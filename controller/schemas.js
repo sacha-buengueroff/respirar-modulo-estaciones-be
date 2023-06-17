@@ -16,3 +16,25 @@ export const schema_estacion = {
     addRegion: value => !!value && value.trim() != "" ? true: "El parametro region se encuentra vacio o nulo",
     external: value => value != undefined && typeof value === "boolean" ? true : "El parametro external vacio o no corresponde el tipo"
 }
+
+export const validate = async (object, schema) => {
+    let response = {}
+
+    let keys = Object.keys(schema)
+    let i = 0
+    let key
+    while (i < keys.length && Object.keys(response).length === 0) {
+        key = keys[i]
+        if (!object.hasOwnProperty(key)) {
+            response.status = 400
+            response.message = "El formulario cuenta con un campo extra"
+        }
+        else if (!object[key] === true) {
+            response.status = 404
+            response.message = object[key]
+        }
+        i += 1
+    }
+
+    return response
+}
