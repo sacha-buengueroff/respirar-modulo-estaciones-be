@@ -19,12 +19,12 @@ class ControladorEstaciones {
     }
 
     postEstacion = async (req, res) => {
-        const solicitud = req.body
-        let response = await validate(solicitud, schema_estacion)
+        const estacion = req.body
+        let response = await validate(estacion, schema_estacion)
+        console.log("respuesta", response);
         if (Object.keys(response).length === 0) {
-            response = await this.apiSolicitudes.guardarSolicitud(solicitud)
+            response = await this.apiEstaciones.postEstacion(estacion)
         }
-        console.log(response);
 
         res.status(response.status).json(response.message)
     }
