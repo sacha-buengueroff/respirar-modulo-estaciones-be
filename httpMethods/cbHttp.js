@@ -31,7 +31,7 @@ class CbHttp {
         } catch (error) {
             return {
                 status: error.response.status,
-                message: error.response.data.name
+                message: error.response.data.description
             }
         }
 
