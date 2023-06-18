@@ -131,7 +131,14 @@ export class RouterEstaciones {
             }  
              #swagger.responses[404] = {
               description: "Parametros erroneos, alguno de los siguientes mensajes",
-              schema: {$ref: '#/definitions/PostEstacionError'}
+              schema: [ "El parametro nombre de usuario se encuentra vacio o nulo",
+                        "El parametro coordenadas es invalido",
+                        "El parametro calle se encuentra vacio o nulo",
+                        "El parametro localidad se encuentra vacio o nulo",
+                        "El parametro region se encuentra vacio o nulo",
+                        "El parametro external vacio o no corresponde el tipo",
+                        "El parametro email vacio o invalido",
+                        "El formulario cuenta con un campo extra"]
             }  
             */
     );

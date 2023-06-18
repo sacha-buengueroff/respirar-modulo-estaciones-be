@@ -70,16 +70,6 @@ const doc = {
             "id": "urn:ngsi-ld:AirQualityObserved:1",
             "mailId": "AirQualityObserved1"
         },
-        PostEstacionError: {
-            "ErrorName": "El parametro nombre de usuario se encuentra vacio o nulo",
-            "ErrorCoordinates": "El parametro coordenadas es invalido",
-            "ErrorAddStreet": "El parametro calle se encuentra vacio o nulo",
-            "ErrorAddLocaly": "El parametro localidad se encuentra vacio o nulo",
-            "ErrorAddRegion": "El parametro region se encuentra vacio o nulo",
-            "ErrorExternal": "El parametro external vacio o no corresponde el tipo",
-            "ErrorEmail": "El parametro email vacio o invalido",
-            "ErrorParameters": "El formulario cuenta con un campo extra"
-        },
     }
 
 };
