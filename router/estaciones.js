@@ -119,6 +119,18 @@ export class RouterEstaciones {
     this.router.get(
       "/porUsuario/:user",
       this.controladorEstaciones.getEstacionesPorUsuario
+      /*
+      #swagger.tags = ['Estaciones']
+      #swagger.description = 'Endpoint para estaciones por usuario.'
+      #swagger.parameters["user"] = {
+          in: "path",
+          required: "true"
+      }
+      #swagger.responses[200] = {
+        description: "Estaciones por usuario encontradas o lista vacía",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        }       
+      */
     );
 
     return this.router;
