@@ -298,7 +298,7 @@ describe("test endpoints estaciones", () => {
                 addLocaly: "San Nicolas",
                 addRegion: "CABA",
                 external: true,
-                email:"hola@gmail.com"
+                email:"tripitconsultora@gmail.com"
             }
             let response = await request.post("/estaciones/").send(body)
             let id_iot = response.body.mailId
@@ -322,7 +322,7 @@ describe("test endpoints estaciones", () => {
                 addStreet: "Av. 9 de Julio",
                 addLocaly: "San Nicolas",
                 addRegion: "CABA",
-                email:"hola@gmail.com"
+                email:"tripitconsultora@gmail.com"
             }
             let response = await request.post("/estaciones/").send(body)
             let id_iot = response.body.mailId
@@ -345,7 +345,7 @@ describe("test endpoints estaciones", () => {
                 addRegion: "CABA",
                 external: true,
                 campoExtra: "Este es un campo extra",
-                email:"hola@gmail.com"
+                email:"tripitconsultora@gmail.com"
             }
             let response = await request.post("/estaciones/").send(body)
             let id_iot = response.body.mailId
