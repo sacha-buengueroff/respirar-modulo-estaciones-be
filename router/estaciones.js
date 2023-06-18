@@ -113,6 +113,14 @@ export class RouterEstaciones {
                     "external": false
                 }
             }
+            #swagger.responses[201] = {
+              description: "Estación agregada",
+              schema: { $ref: '#/definitions/PostEstacion' }
+            }  
+             #swagger.responses[404] = {
+              description: "Parametros erroneos, alguno de los siguientes mensajes",
+              schema: {$ref: '#/definitions/PostEstacionError'}
+            }  
             */
     );
 
