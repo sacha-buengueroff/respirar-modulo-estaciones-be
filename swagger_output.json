@@ -77,31 +77,71 @@
         "tags": [
           "Estaciones"
         ],
-        "description": "Endpoint para publicar datos de una estación.",
+        "description": "Endpoint que los usuarios podran utilizar para publicar datos de una estación.",
         "parameters": [
           {
             "name": "i",
             "in": "query",
+            "description": "Id de estación enviado por mail",
             "required": true,
             "type": "string"
           },
           {
             "name": "k",
             "in": "query",
+            "description": "ApiKey de servicio enviado por mail",
             "required": true,
             "type": "string"
           },
           {
             "name": "data",
             "in": "body",
-            "description": "Plain text data",
+            "description": "Atributos a actualizar (Texto plano)",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {}
+              "type": "string",
+              "example": "t|1|r|1|pm1|0.5|pm10|1|pm25|1"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Datos cargados correctamente",
+            "schema": {
+              "type": "string",
+              "example": "Se cargaron correctamente los datos",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Se envia texto plano erroneo",
+            "schema": {
+              "type": "string",
+              "example": "Error al cargar los datos del dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Estación inexistente / Estacion Deshabilitada",
+            "schema": {
+              "type": "array",
+              "example": [
+                "El dispositivo no existe",
+                "El dispositivo esta deshabilitado"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/": {

@@ -66,22 +66,34 @@ export class RouterEstaciones {
       this.controladorEstaciones.postDatosEstacion
       /*
             #swagger.tags = ['Estaciones']
-            #swagger.description = 'Endpoint para publicar datos de una estación.'
+            #swagger.description = 'Endpoint que los usuarios podran utilizar para publicar datos de una estación.'
             #swagger.parameters["i"] = {
                 in: "query",
+                description: 'Id de estación enviado por mail',
                 required: "true"
             }
             #swagger.parameters["k"] = {
                 in: "query",
-                required: "true"
-            }
-            #swagger.parameters["i"] = {
-                in: "query",
+                description: 'ApiKey de servicio enviado por mail',
                 required: "true"
             }
             #swagger.parameters['data'] = {
                 in: 'body',
-                description: 'Plain text data'
+                description: 'Atributos a actualizar (Texto plano)',
+                required: "true",
+                schema: "t|1|r|1|pm1|0.5|pm10|1|pm25|1"
+            }
+            #swagger.responses[200] = {
+                description: "Datos cargados correctamente",
+                schema:  "Se cargaron correctamente los datos"
+            }
+            #swagger.responses[400] = {
+                description: "Se envia texto plano erroneo",
+                schema: "Error al cargar los datos del dispositivo AirQualityObserved1"
+            }
+             #swagger.responses[404] = {
+                description: "Estación inexistente / Estacion Deshabilitada",
+                schema:  ["El dispositivo no existe","El dispositivo esta deshabilitado"]
             }
             */
     );
