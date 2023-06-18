@@ -51,19 +51,20 @@ class ApiEstaciones {
     postDatosEstacion = async (k, i, data) => {
         let id = i.split(this.type)[1]
         let estacion = (await this.getDatosEstaciones(`${this.protocolo}${this.type}:${id}`)).message
-        if (typeof(estacion) != "string" && estacion.enable.value) {
-            return await this.AgentUlHttp.postDatosEstacion(k, i, data)
-        } 
-        else if (typeof(estacion) == "string") {
+        if (typeof(estacion) != "string"){
+            let habilitada= typeof(estacion.enable) === "boolean"?estacion.enable:estacion.enable.value
+            if(habilitada) {
+                return await this.AgentUlHttp.postDatosEstacion(k, i, data)
+            }else {
+                return {
+                    status: 404,
+                    message: "El dispositivo está deshabilitado"
+                }
+            }
+        }else if (typeof(estacion) == "string") {
             return {
                 status: 404,
                 message: "El dispositivo no existe"
-            }
-        }
-        else {
-            return {
-                status: 404,
-                message: "El dispositivo está deshabilitado"
             }
         }
     }

@@ -102,8 +102,8 @@ describe("test endpoints estaciones", () => {
                 external: false
             }
             let response = await request.post("/estaciones/").send(body)
-            id_iot = response.body.mailId
-            id_cb = response.body.id
+            id_iot =  response.body.mailId
+            id_cb =  response.body.id
         })
 
         after(async () => {
@@ -113,6 +113,7 @@ describe("test endpoints estaciones", () => {
 
         it("Debería retornar la estacion especifica cuando se pasa id", async () => {
             let response = await request.get(`/estaciones/${id_cb}`)
+            
             expect(response.status).to.eql(200)
 
             let estacion = response.body;
