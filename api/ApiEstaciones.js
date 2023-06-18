@@ -31,7 +31,6 @@ class ApiEstaciones {
 
         var response = await this.AgentUlHttp.postEstacion(formulario)
         if (formulario.external) {
-            console.log(formulario.email+"  "+response.message.mailId);
             await Mailer.enviarMail(formulario.email, response.message.mailId)
 
         }
@@ -52,10 +51,10 @@ class ApiEstaciones {
     postDatosEstacion = async (k, i, data) => {
         let id = i.split(this.type)[1]
         let estacion = (await this.getDatosEstaciones(`${this.protocolo}${this.type}:${id}`)).message
-        if (estacion && estacion.enable.value) {
+        if (typeof(estacion) != "string" && estacion.enable.value) {
             return await this.AgentUlHttp.postDatosEstacion(k, i, data)
         } 
-        else if (!estacion) {
+        else if (typeof(estacion) == "string") {
             return {
                 status: 404,
                 message: "El dispositivo no existe"

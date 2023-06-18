@@ -253,5 +253,184 @@ describe("test endpoints estaciones", () => {
             expect(response.body).to.eql("Se cargaron correctamente los datos")
         })
 
+        it("Debería arrojar error al intentar enviar datos a un dispositivo deshabilitado", async () => {
+            await request.put(`/estaciones/suspenderEstacion/${id_cb}`)
+            let response = await request.post(`/estaciones/data/?k=${key}&i=${id_iot}`)
+            .set({
+                'Content-Type': 'text/plain'
+            }).send(body_data)
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El dispositivo está deshabilitado")
+            await request.put(`/estaciones/habilitarEstacion/${id_cb}`)
+        })
+
+        it("Debería arrojar error al intentar enviar datos a un id invalido", async () => {
+            let response = await request.post(`/estaciones/data/?k=${key}&i=${id_iot}aa`)
+            .set({
+                'Content-Type': 'text/plain'
+            }).send(body_data)
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El dispositivo no existe")
+        })
+
+    })
+
+    describe("POST estación externa", async () => {
+
+        let ids = []
+
+        after(() => {
+            ids.forEach(async id => {
+                await axios.delete(`${urlIot}${id.id_iot}`, req_config)
+                await axios.delete(`${urlCb}${id.id_cb}`, req_config)
+            });
+        })
+
+        it("Debería crear exitosamente la estación", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                external: true,
+                email:"hola@gmail.com"
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(201)
+            expect(response.body).to.include.keys(
+                "id",
+                "mailId"
+            )
+        })
+
+        it("Debería arrojar error si falta un campo", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                email:"hola@gmail.com"
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El parametro external vacio o no corresponde el tipo")
+        })
+
+        it("Debería arrojar error si hay campo extra", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                external: true,
+                campoExtra: "Este es un campo extra",
+                email:"hola@gmail.com"
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El formulario cuenta con un campo extra")
+        })
+    })
+
+    describe("POST estación interna", async () => {
+
+        let ids = []
+
+        after(() => {
+            ids.forEach(async id => {
+                await axios.delete(`${urlIot}${id.id_iot}`, req_config)
+                await axios.delete(`${urlCb}${id.id_cb}`, req_config)
+            });
+        })
+
+        it("Debería crear exitosamente la estación", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                external: false
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(201)
+            expect(response.body).to.include.keys(
+                "id",
+                "mailId"
+            )
+        })
+
+        it("Debería arrojar error si falta un campo", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA"
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El parametro external vacio o no corresponde el tipo")
+        })
+
+        it("Debería arrojar error si hay campo extra", async () => {
+            let body = {
+                name: "Obelisco",
+                coordinates: [
+                    "111",
+                    "222"
+                ],
+                addStreet: "Av. 9 de Julio",
+                addLocaly: "San Nicolas",
+                addRegion: "CABA",
+                external: false,
+                email:"mailextra@gmail.com"
+            }
+            let response = await request.post("/estaciones/").send(body)
+            let id_iot = response.body.mailId
+            let id_cb = response.body.id
+            ids.push({id_iot, id_cb})
+
+            expect(response.status).to.eql(404)
+            expect(response.body).to.eql("El formulario cuenta con un campo extra")
+        })
     })
 })
