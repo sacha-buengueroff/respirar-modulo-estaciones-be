@@ -66,10 +66,32 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id extendido formato JsonLD"
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Estación habilitada",
+            "schema": {
+              "type": "string",
+              "example": "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "409": {
+            "description": "Estación previamente habilitada",
+            "schema": {
+              "type": "string",
+              "example": "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/data/": {
@@ -151,12 +173,6 @@
         ],
         "description": "Endpoint para publicar una estación.",
         "parameters": [
-          {
-            "name": "idSolicitud?",
-            "in": "path",
-            "required": false,
-            "type": "string"
-          },
           {
             "name": "estacion",
             "in": "body",
@@ -526,43 +542,6 @@
         "mailId": {
           "type": "string",
           "example": "AirQualityObserved1"
-        }
-      }
-    },
-    "PostEstacionError": {
-      "type": "object",
-      "properties": {
-        "ErrorName": {
-          "type": "string",
-          "example": "El parametro nombre de usuario se encuentra vacio o nulo"
-        },
-        "ErrorCoordinates": {
-          "type": "string",
-          "example": "El parametro coordenadas es invalido"
-        },
-        "ErrorAddStreet": {
-          "type": "string",
-          "example": "El parametro calle se encuentra vacio o nulo"
-        },
-        "ErrorAddLocaly": {
-          "type": "string",
-          "example": "El parametro localidad se encuentra vacio o nulo"
-        },
-        "ErrorAddRegion": {
-          "type": "string",
-          "example": "El parametro region se encuentra vacio o nulo"
-        },
-        "ErrorExternal": {
-          "type": "string",
-          "example": "El parametro external vacio o no corresponde el tipo"
-        },
-        "ErrorEmail": {
-          "type": "string",
-          "example": "El parametro email vacio o invalido"
-        },
-        "ErrorParameters": {
-          "type": "string",
-          "example": "El formulario cuenta con un campo extra"
         }
       }
     }

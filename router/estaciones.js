@@ -55,7 +55,16 @@ export class RouterEstaciones {
             #swagger.description = 'Endpoint para habilitar una estación.'
             #swagger.parameters["id"] = {
                 in: "path",
-                required: "true"
+                description: 'Id extendido formato JsonLD',
+                required: "true",
+            }
+            #swagger.responses[201] = {
+                description: "Estación habilitada",
+                schema:  "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1"
+            }
+            #swagger.responses[409] = {
+                description: "Estación previamente habilitada",
+                schema:  "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1"
             }
             */
     );
@@ -105,10 +114,6 @@ export class RouterEstaciones {
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar una estación.'
-            #swagger.parameters["idSolicitud?"] = {
-                in: "path",
-                required: "false"
-            }
             #swagger.parameters['estacion'] = {
                 in: 'body',
                 description: 'Datos de la estación',
