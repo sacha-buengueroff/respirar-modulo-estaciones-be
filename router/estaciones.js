@@ -41,7 +41,15 @@ export class RouterEstaciones {
             #swagger.description = 'Endpoint para suspender una estación.'
             #swagger.parameters["id"] = {
                 in: "path",
-                required: "true"
+                description: 'Id extendido formato JsonLD',
+                required: "true",
+            }
+             #swagger.responses[204] = {
+                description: "Estación deshabilitada",
+            }
+            #swagger.responses[404] = {
+                description: "Estacion inexistente / previamente Deshabilitada",
+                schema: "Error al suspender el dispositivo AirQualityObserved1"
             }
             */
     );

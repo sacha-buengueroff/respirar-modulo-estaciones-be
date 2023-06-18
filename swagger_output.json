@@ -49,10 +49,25 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id extendido formato JsonLD"
           }
         ],
-        "responses": {}
+        "responses": {
+          "204": {
+            "description": "Estación deshabilitada"
+          },
+          "404": {
+            "description": "Estacion inexistente / previamente Deshabilitada",
+            "schema": {
+              "type": "string",
+              "example": "Error al suspender el dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/habilitarEstacion/{id}": {
