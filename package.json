@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.test.js --timeout 10000",
+    "test": "mocha test/*.test.js --timeout 10000 --ui bdd",
     "start": "node index.js",
     "watch": "nodemon index.js",
     "swagger-autogen": "node swagger.js"
