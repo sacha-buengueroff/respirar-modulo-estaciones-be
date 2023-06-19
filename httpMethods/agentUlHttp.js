@@ -179,6 +179,9 @@ class AgentUlHttp {
     async habilitarEstacion(id) {
         try {
             let estacion = await this.cbHttp.getEstaciones(id)
+            if(estacion.status = 404) {
+                return estacion
+            }
             estacion = estacion.message;
             let form = {
                 id: estacion.id.split(":").slice(2).join(""),
