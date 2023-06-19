@@ -14,7 +14,7 @@ export class RouterSolicitudes {
         this.router.get('/:idSolicitud?', this.controladorSolicitudes.getSolicitudes
         /*
         #swagger.tags = ['Solicitudes']
-        #swagger.description = 'Endpoint para obtener un listado de solicitudes.'
+        #swagger.description = 'Endpoint para obtener un listado de solicitudes o buscar una solicitud por id.'
         #swagger.parameters["idSolicitud?"] = {
             in: "path",
             required: "false"
@@ -24,8 +24,8 @@ export class RouterSolicitudes {
             schema: [{ $ref: '#/definitions/Solicitud' }]
         }  
         #swagger.responses[400] = {
-        description: "Estación no encontrada (Búsqueda con Id)",
-        schema: "No se encontró solicitud con el id enviado"
+            description: "Estación no encontrada (Búsqueda con Id)",
+            schema: "No se encontró solicitud con el id enviado"
            }  
         */
         )
@@ -57,12 +57,12 @@ export class RouterSolicitudes {
             }
         }
         #swagger.responses[200] = {
-        description: "Solicitud agregada",
-        schema: { $ref: '#/definitions/Solicitud' }
+            description: "Solicitud agregada",
+            schema: { $ref: '#/definitions/Solicitud' }
         }
         #swagger.responses[404] = {
-        description: "Parametros erroneos, alguno de los siguientes mensajes",
-              schema: [ "El parametro nombre de usuario se encuentra vacio o nulo",
+            description: "Parametros erroneos, alguno de los siguientes mensajes",
+            schema: [ "El parametro nombre de usuario se encuentra vacio o nulo",
                         "El parametro coordenadas es invalido",
                         "El parametro calle se encuentra vacio o nulo",
                         "El parametro localidad se encuentra vacio o nulo",
@@ -77,11 +77,20 @@ export class RouterSolicitudes {
         this.router.delete('/rechazar/:idSolicitud', this.controladorSolicitudes.rejectSolicitud
         /*
         #swagger.tags = ['Solicitudes']
-        #swagger.description = 'Endpoint para eliminación de solicitudes.'
+        #swagger.description = 'Endpoint para eliminación de solicitudes, adicionalmente notifica por mail a solicitante.'
         #swagger.parameters["idSolicitud?"] = {
             in: "path",
             required: "true"
         }
+        #swagger.responses[200] = {
+            description: "Solicitudes encontradas o lista vacia (Búsqueda sin Id)",
+            schema: [{ $ref: '#/definitions/Solicitud' }]
+        }  
+        #swagger.responses[400] = {
+           description: "Estación no encontrada (Búsqueda con Id)",
+           schema: "No se encontró solicitud con el id enviado"
+           } 
+
         */
         )
 
