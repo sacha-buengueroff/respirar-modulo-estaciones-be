@@ -39,6 +39,38 @@ export class RouterSolicitudes {
             in: "body",
             required: "true"
         }
+        #swagger.parameters['solicitud'] = {
+            in: 'body',
+            description: 'Datos de la estación',
+            required: "false",
+            schema: {
+                "name": "name" , 
+                "coordinates": [
+                                -29.233012401017962,
+                                136.7063500973975
+                                ],
+                "addStreet":"Street", 
+                "addLocaly": "Localy", 
+                "addRegion":"Region" , 
+                "external": true,
+                "email" : "ciudades@hotmail.com"  
+            }
+        }
+        #swagger.responses[200] = {
+        description: "Solicitud agregada",
+        schema: { $ref: '#/definitions/Solicitud' }
+        }
+        #swagger.responses[404] = {
+        description: "Parametros erroneos, alguno de los siguientes mensajes",
+              schema: [ "El parametro nombre de usuario se encuentra vacio o nulo",
+                        "El parametro coordenadas es invalido",
+                        "El parametro calle se encuentra vacio o nulo",
+                        "El parametro localidad se encuentra vacio o nulo",
+                        "El parametro region se encuentra vacio o nulo",
+                        "El parametro external vacio o no corresponde el tipo",
+                        "El formulario cuenta con un campo extra",
+                        "El parametro email vacio o invalido"]
+        }
         */
         )
         /* POST Rechazo Solicitud de Inscripción de Estación */
