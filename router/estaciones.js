@@ -56,8 +56,9 @@ export class RouterEstaciones {
                 description: 'Id extendido formato JsonLD',
                 required: "true",
             }
-             #swagger.responses[204] = {
+             #swagger.responses[200] = {
                 description: "Estación deshabilitada",
+                schema: "Se suspendio correctamente el dispositivo AirQualityObserved1"
             }
             #swagger.responses[404] = {
                 description: "Estacion inexistente / previamente Deshabilitada",
@@ -83,7 +84,7 @@ export class RouterEstaciones {
                 schema:  "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1"
             }
             #swagger.responses[400] = {
-                description: "Estación previamente habilitada",
+                description: "Estación inexistente",
                 schema:  "No se ha encontrado la entidad solicitada. Compruebe el Id"
             }
             #swagger.responses[409] = {

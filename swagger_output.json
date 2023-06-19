@@ -18,7 +18,20 @@
         ],
         "description": "Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Estaciones por usuario encontradas o lista vacía",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Estacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/{id?}": {
@@ -119,21 +132,21 @@
               }
             }
           },
-          "409": {
-            "description": "Estación previamente habilitada",
+          "400": {
+            "description": "Estación inexistente",
             "schema": {
               "type": "string",
-              "example": "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
               "xml": {
                 "name": "main"
               }
             }
           },
-          "500": {
+          "409": {
             "description": "Estación previamente habilitada",
             "schema": {
               "type": "string",
-              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
+              "example": "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1",
               "xml": {
                 "name": "main"
               }
