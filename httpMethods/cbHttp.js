@@ -30,9 +30,17 @@ class CbHttp {
                 message: response.data
             }
         } catch (error) {
-            return {
-                status: error.response.status,
-                message: error.response.data.description
+            if (error.response.data.description == "The requested entity has not been found. Check type and id") {
+                return {
+                    status: 400,
+                    message: "No se ha encontrado la entidad solicitada. Compruebe el id."
+                }
+            }
+            else {
+                return {
+                    status: error.response.status,
+                    message: error.response.data.description
+                }
             }
         }
 
