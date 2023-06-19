@@ -179,7 +179,6 @@ class AgentUlHttp {
     async habilitarEstacion(id) {
         try {
             let estacion = await this.cbHttp.getEstaciones(id)
-            console.log(estacion);
             if(estacion.status == 400) {
                 return estacion
             }
