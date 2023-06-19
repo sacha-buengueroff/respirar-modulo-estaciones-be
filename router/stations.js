@@ -58,7 +58,7 @@ export class StationRouter {
     /* POST Datos Estación */
     this.router.post(
       "/data/",
-      this.ControllerStations.postStationData
+      this.ControllerStations.postDataStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar datos de una estación.'
