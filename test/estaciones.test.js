@@ -162,8 +162,8 @@ describe("test endpoints estaciones", () => {
             let id_invalido = "aaaaaa"
             let response = await request.get(`/estaciones/${id_invalido}`)
 
-            expect(response.status).to.eql(404)
-            expect(response.body).to.eql("The requested entity has not been found. Check type and id")
+            expect(response.status).to.eql(400)
+            expect(response.body).to.eql("No se ha encontrado la entidad solicitada. Compruebe el id.")
         })
     })
 

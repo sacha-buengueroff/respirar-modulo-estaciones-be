@@ -179,35 +179,37 @@ class AgentUlHttp {
     async habilitarEstacion(id) {
         try {
             let estacion = await this.cbHttp.getEstaciones(id)
-            if(estacion.status = 404) {
+            if(estacion.status == 404) {
                 return estacion
             }
-            estacion = estacion.message;
-            let form = {
-                id: estacion.id.split(":").slice(2).join(""),
-                entityName: estacion.id,
-                name: estacion.ownerId.value,
-                coordinates: estacion.location.value.coordinates,
-                addStreet: estacion.address.value.address.streetAddress,
-                addLocaly: estacion.address.value.address.addressLocality,
-                addRegion: estacion.address.value.address.addressRegion,
-                external: (estacion.dataProvider.value != "Respirar")
-            }
-            var response = await this.postEstacion(form)
-            if (response.status > 199 && response.status < 300) {
-                return {
-                    status: response.status,
-                    message: "Se habilito correctamente el dispositivo " + id
+            else {
+                estacion = estacion.message;
+                let form = {
+                    id: estacion.id.split(":").slice(2).join(""),
+                    entityName: estacion.id,
+                    name: estacion.ownerId.value,
+                    coordinates: estacion.location.value.coordinates,
+                    addStreet: estacion.address.value.address.streetAddress,
+                    addLocaly: estacion.address.value.address.addressLocality,
+                    addRegion: estacion.address.value.address.addressRegion,
+                    external: (estacion.dataProvider.value != "Respirar")
                 }
-            } else {
-                const axiosError = {
-                    isAxiosError: true,
-                    response: {
+                var response = await this.postEstacion(form)
+                if (response.status > 199 && response.status < 300) {
+                    return {
                         status: response.status,
-                        data: { message: 'Recurso no encontrado' },
+                        message: "Se habilito correctamente el dispositivo " + id
                     }
+                } else {
+                    const axiosError = {
+                        isAxiosError: true,
+                        response: {
+                            status: response.status,
+                            data: { message: 'Recurso no encontrado' },
+                        }
+                    }
+                    throw axiosError
                 }
-                throw axiosError
             }
 
         } catch (e) {
