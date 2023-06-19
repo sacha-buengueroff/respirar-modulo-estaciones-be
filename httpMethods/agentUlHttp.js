@@ -208,8 +208,9 @@ class AgentUlHttp {
             }
 
         } catch (e) {
+            console.log(e)
             return {
-                status: e.response.status,
+                status: e.response?.status || 500,
                 message: "Error al habilitar el dispositivo " + id
             }
         }
