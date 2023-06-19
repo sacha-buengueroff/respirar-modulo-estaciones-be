@@ -15,6 +15,10 @@ export class RouterEstaciones {
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
+        #swagger.responses[200] = {
+        description: "Estaciones por usuario encontradas o lista vacía",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        } 
         */
     );
 
@@ -29,6 +33,14 @@ export class RouterEstaciones {
             in: "path",
             required: "false"
         }
+         #swagger.responses[200] = {
+        description: "Estaciones encontradas o lista vacía",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        } 
+        #swagger.responses[404] = {
+                description: "Estacion inexistente (Búsqueda con Id)",
+                schema: "No se ha encontrado la entidad solicitada. Compruebe el Id"
+            }
         */
     );
 
@@ -41,7 +53,16 @@ export class RouterEstaciones {
             #swagger.description = 'Endpoint para suspender una estación.'
             #swagger.parameters["id"] = {
                 in: "path",
-                required: "true"
+                description: 'Id extendido formato JsonLD',
+                required: "true",
+            }
+             #swagger.responses[200] = {
+                description: "Estación deshabilitada",
+                schema: "Se suspendio correctamente el dispositivo AirQualityObserved1"
+            }
+            #swagger.responses[404] = {
+                description: "Estacion inexistente / previamente Deshabilitada",
+                schema: "Error al suspender el dispositivo AirQualityObserved1"
             }
             */
     );
@@ -55,7 +76,20 @@ export class RouterEstaciones {
             #swagger.description = 'Endpoint para habilitar una estación.'
             #swagger.parameters["id"] = {
                 in: "path",
-                required: "true"
+                description: 'Id extendido formato JsonLD',
+                required: "true",
+            }
+            #swagger.responses[201] = {
+                description: "Estación habilitada",
+                schema:  "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1"
+            }
+            #swagger.responses[400] = {
+                description: "Estación inexistente",
+                schema:  "No se ha encontrado la entidad solicitada. Compruebe el Id"
+            }
+            #swagger.responses[409] = {
+                description: "Estación previamente habilitada",
+                schema:  "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1"
             }
             */
     );
@@ -66,22 +100,34 @@ export class RouterEstaciones {
       this.controladorEstaciones.postDatosEstacion
       /*
             #swagger.tags = ['Estaciones']
-            #swagger.description = 'Endpoint para publicar datos de una estación.'
+            #swagger.description = 'Endpoint que los usuarios podran utilizar para publicar datos de una estación.'
             #swagger.parameters["i"] = {
                 in: "query",
+                description: 'Id de estación enviado por mail',
                 required: "true"
             }
             #swagger.parameters["k"] = {
                 in: "query",
-                required: "true"
-            }
-            #swagger.parameters["i"] = {
-                in: "query",
+                description: 'ApiKey de servicio enviado por mail',
                 required: "true"
             }
             #swagger.parameters['data'] = {
                 in: 'body',
-                description: 'Plain text data'
+                description: 'Atributos a actualizar (Texto plano)',
+                required: "true",
+                schema: "t|1|r|1|pm1|0.5|pm10|1|pm25|1"
+            }
+            #swagger.responses[200] = {
+                description: "Datos cargados correctamente",
+                schema:  "Se cargaron correctamente los datos"
+            }
+            #swagger.responses[400] = {
+                description: "Se envia texto plano erroneo",
+                schema: "Error al cargar los datos del dispositivo AirQualityObserved1"
+            }
+             #swagger.responses[404] = {
+                description: "Estación inexistente / Estacion Deshabilitada",
+                schema:  ["El dispositivo no existe","El dispositivo esta deshabilitado"]
             }
             */
     );
@@ -93,10 +139,6 @@ export class RouterEstaciones {
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar una estación.'
-            #swagger.parameters["idSolicitud?"] = {
-                in: "path",
-                required: "false"
-            }
             #swagger.parameters['estacion'] = {
                 in: 'body',
                 description: 'Datos de la estación',
@@ -113,12 +155,38 @@ export class RouterEstaciones {
                     "external": false
                 }
             }
+            #swagger.responses[201] = {
+              description: "Estación agregada",
+              schema: { $ref: '#/definitions/PostEstacion' }
+            }  
+             #swagger.responses[404] = {
+              description: "Parametros erroneos, alguno de los siguientes mensajes",
+              schema: [ "El parametro nombre de usuario se encuentra vacio o nulo",
+                        "El parametro coordenadas es invalido",
+                        "El parametro calle se encuentra vacio o nulo",
+                        "El parametro localidad se encuentra vacio o nulo",
+                        "El parametro region se encuentra vacio o nulo",
+                        "El parametro external vacio o no corresponde el tipo",
+                        "El formulario cuenta con un campo extra"]
+            }  
             */
     );
 
     this.router.get(
       "/porUsuario/:user",
       this.controladorEstaciones.getEstacionesPorUsuario
+      /*
+      #swagger.tags = ['Estaciones']
+      #swagger.description = 'Endpoint para estaciones por usuario.'
+      #swagger.parameters["user"] = {
+          in: "path",
+          required: "true"
+      }
+      #swagger.responses[200] = {
+        description: "Estaciones por usuario encontradas o lista vacía",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        }       
+      */
     );
 
     return this.router;
