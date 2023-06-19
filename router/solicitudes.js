@@ -83,11 +83,11 @@ export class RouterSolicitudes {
             required: "true"
         }
         #swagger.responses[200] = {
-            description: "Solicitudes encontradas o lista vacia (Búsqueda sin Id)",
+            description: "Solicitud Rechazada",
             schema: [{ $ref: '#/definitions/Solicitud' }]
         }  
         #swagger.responses[400] = {
-           description: "Estación no encontrada (Búsqueda con Id)",
+           description: "Estación no encontrada",
            schema: "No se encontró solicitud con el id enviado"
            } 
 
@@ -103,6 +103,14 @@ export class RouterSolicitudes {
             in: "path",
             required: "true"
         }
+        #swagger.responses[200] = {
+            description: "Solicitud Rechazada",
+            schema: [{ $ref: '#/definitions/Solicitud' }]
+        }  
+        #swagger.responses[400] = {
+           description: "Estación no encontrada",
+           schema: "No se encontró solicitud con el id enviado"
+           } 
         */
         )
 

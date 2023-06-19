@@ -349,7 +349,7 @@
         "tags": [
           "Solicitudes"
         ],
-        "description": "Endpoint para obtener un listado de solicitudes.",
+        "description": "Endpoint para obtener un listado de solicitudes o buscar una solicitud por id.",
         "parameters": [
           {
             "name": "idSolicitud?",
@@ -474,7 +474,7 @@
         "tags": [
           "Solicitudes"
         ],
-        "description": "Endpoint para eliminación de solicitudes.",
+        "description": "Endpoint para eliminación de solicitudes, adicionalmente notifica por mail a solicitante.",
         "parameters": [
           {
             "name": "idSolicitud",
@@ -489,7 +489,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitud Rechazada",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/solicitudes/{idSolicitud}": {
@@ -512,7 +535,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitud Rechazada",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     }
   },
