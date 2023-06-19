@@ -35,7 +35,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Estaciones encontradas o lista vacía (Búsqueda sin Id)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Estacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Estacion inexistente (Búsqueda con Id)",
+            "schema": {
+              "type": "string",
+              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/suspenderEstacion/{id}": {
@@ -101,6 +124,16 @@
             "schema": {
               "type": "string",
               "example": "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Estación previamente habilitada",
+            "schema": {
+              "type": "string",
+              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
               "xml": {
                 "name": "main"
               }

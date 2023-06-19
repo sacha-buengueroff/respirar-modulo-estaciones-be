@@ -29,6 +29,14 @@ export class RouterEstaciones {
             in: "path",
             required: "false"
         }
+         #swagger.responses[200] = {
+        description: "Estaciones encontradas o lista vacía (Búsqueda sin Id)",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        } 
+        #swagger.responses[404] = {
+                description: "Estacion inexistente (Búsqueda con Id)",
+                schema: "No se ha encontrado la entidad solicitada. Compruebe el Id"
+            }
         */
     );
 
@@ -69,6 +77,10 @@ export class RouterEstaciones {
             #swagger.responses[201] = {
                 description: "Estación habilitada",
                 schema:  "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1"
+            }
+            #swagger.responses[400] = {
+                description: "Estación previamente habilitada",
+                schema:  "No se ha encontrado la entidad solicitada. Compruebe el Id"
             }
             #swagger.responses[409] = {
                 description: "Estación previamente habilitada",
