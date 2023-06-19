@@ -172,7 +172,7 @@ class AgentUlHttp {
     }
     async enableStation(id) {
         try {
-            let station = await this.cbHttp.getStation(id)
+            let station = await this.cbHttp.getStations(id)
             if(station.status == 400) {
                 return station
             }
