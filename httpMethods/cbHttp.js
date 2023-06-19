@@ -36,9 +36,11 @@ class CbHttp {
                     message: "No se ha encontrado la entidad solicitada. Compruebe el id."
                 }
             }
-            return {
-                status: error.response.status,
-                message: error.response.data.description
+            else {
+                return {
+                    status: error.response.status,
+                    message: error.response.data.description
+                }
             }
         }
 
