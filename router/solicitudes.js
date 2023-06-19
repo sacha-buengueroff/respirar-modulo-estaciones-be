@@ -78,7 +78,7 @@ export class RouterSolicitudes {
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para eliminación de solicitudes, adicionalmente notifica por mail a solicitante.'
-        #swagger.parameters["idSolicitud?"] = {
+        #swagger.parameters["idSolicitud"] = {
             in: "path",
             required: "true"
         }
@@ -99,7 +99,7 @@ export class RouterSolicitudes {
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para eliminación de solicitudes.'
-        #swagger.parameters["idSolicitud?"] = {
+        #swagger.parameters["idSolicitud"] = {
             in: "path",
             required: "true"
         }

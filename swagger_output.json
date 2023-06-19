@@ -481,12 +481,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "idSolicitud?",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -524,12 +518,6 @@
         "parameters": [
           {
             "name": "idSolicitud",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "idSolicitud?",
             "in": "path",
             "required": true,
             "type": "string"
