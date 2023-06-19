@@ -20,7 +20,7 @@ export class RouterSolicitudes {
             required: "false"
         }
         #swagger.responses[200] = {
-            description: "Solicitudes encontradas o lista vacia (Búsqueda sin Id)",
+            description: "Solicitudes encontradas o lista vacia",
             schema: [{ $ref: '#/definitions/Solicitud' }]
         }  
         #swagger.responses[400] = {

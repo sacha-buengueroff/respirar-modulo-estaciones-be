@@ -50,7 +50,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Estaciones encontradas o lista vacía (Búsqueda sin Id)",
+            "description": "Estaciones encontradas o lista vacía",
             "schema": {
               "type": "array",
               "items": {
@@ -360,7 +360,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Solicitudes encontradas o lista vacia (Búsqueda sin Id)",
+            "description": "Solicitudes encontradas o lista vacia",
             "schema": {
               "type": "array",
               "items": {

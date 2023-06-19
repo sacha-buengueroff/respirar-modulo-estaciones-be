@@ -34,7 +34,7 @@ export class RouterEstaciones {
             required: "false"
         }
          #swagger.responses[200] = {
-        description: "Estaciones encontradas o lista vacía (Búsqueda sin Id)",
+        description: "Estaciones encontradas o lista vacía",
             schema:  [{ $ref: '#/definitions/Estacion' }]
         } 
         #swagger.responses[404] = {
