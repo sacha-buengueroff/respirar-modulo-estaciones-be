@@ -195,7 +195,8 @@ describe("test endpoints estaciones", () => {
 
         it("Debería suspender la estación habilitada", async () => {
             let response = await request.put(`/estaciones/suspenderEstacion/${id_cb}`)
-            expect(response.status).to.eql(204)
+            expect(response.status).to.eql(200)
+            expect(response.body).to.eql(`Se suspendio correctamente el dispositivo ${id_iot}`)
         })
 
         it("Debería arrojar error al suspender la estación suspendida", async () => {

@@ -166,7 +166,7 @@ class AgentUlHttp {
             id = id.split(":").slice(2).join("")
             const response = await axios.delete(this.url + "/devices/" + id, this.config)
             return {
-                status: response.status,
+                status: 200,
                 message: "Se suspendio correctamente el dispositivo " + id
             }
         } catch (e) {
