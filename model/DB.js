@@ -2,12 +2,10 @@ import { MongoClient } from "mongodb"
 import config from '../config.js'
 
 class CnxMongoDB {
-
     static connection = false
     static db
     static client
-
-    static conectar = async _ => {
+    static connect = async _ => {
         try {
             console.log('Conectando a la base de datos...')
             CnxMongoDB.client = new MongoClient(config.STRCNX, {
@@ -25,7 +23,7 @@ class CnxMongoDB {
         }
     }
     
-    static desconectar = async _ => {
+    static disconnect = async _ => {
         if(!CnxMongoDB.connection) return
         await CnxMongoDB.client.close()
     }

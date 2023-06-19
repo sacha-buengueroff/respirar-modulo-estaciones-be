@@ -1,9 +1,7 @@
 import config from '../config.js'
 import nodemailer from 'nodemailer'
-import { mailHtml, mailRechazoHtml } from './mailContent.js';
-
+import { mailHtml, mailRefusalHtml } from './mailContent.js';
 class Mailer {
-
     static transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -11,8 +9,7 @@ class Mailer {
             pass: config.MAIL_PASS
         }
     })
-
-    static async enviarMail(email, idDevice) {
+    static async sendMail(email, idDevice) {
         var mailOptions = {
             from: "tripitconsultora@gmail.com",
             to: email,
@@ -21,16 +18,14 @@ class Mailer {
         }
         return await Mailer.transporter.sendMail(mailOptions)
     }
-
-    static async enviarMailRechazo(email) {
+    static async sendRefusalMail(email) {
         var mailOptions = {
             from: "tripitconsultora@gmail.com",
             to: email,
             subject: "Lamentablemente tu solicitud fue rechazada",
-            html: mailRechazoHtml()
+            html: mailRefusalHtml()
         }
         return await Mailer.transporter.sendMail(mailOptions)
     }
 }
-
 export default Mailer

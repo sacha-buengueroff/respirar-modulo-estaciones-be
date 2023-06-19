@@ -1,66 +1,59 @@
 import { ObjectId } from "mongodb"
 import CnxMongoDB from '../DB.js'
-
-
-class SolicitudesMongoDB {
-
-    findSolicitud = async id => {
+class ApplicationsMongoDB {
+    findApplication = async id => {
         try {
             if (!CnxMongoDB.connection) throw new Error("No hay conexión a la base de datos")
-            let solicitud = await CnxMongoDB.db.collection("solicitudes").findOne({ _id: new ObjectId(id) })
-            if (!solicitud) {
+            let application = await CnxMongoDB.db.collection("solicitudes").findOne({ _id: new ObjectId(id) })
+            if (!application) {
                 throw new Error("No se encontró solicitud con el id enviado")
             }
-            return { message: solicitud, status: 200 }
+            return { message: application, status: 200 }
         }
         catch (error) {
             return { message: error.message, status: 400 }
         }
     }
-
-    findSolicitudes = async () => {
+    findApplications = async () => {
         try {
             if (!CnxMongoDB.connection) throw new Error("No hay conexión a la base de datos")
-            let solicitudes = await CnxMongoDB.db.collection('solicitudes').find({}).toArray()
-            return { message: solicitudes, status: 200 }
+            let applications = await CnxMongoDB.db.collection('solicitudes').find({}).toArray()
+            return { message: applications, status: 200 }
         }
         catch (error) {
             return { message: error.message, status: 400 }
         }
     }
-
-    saveSolicitud = async solicitud => {
+    saveApplication = async application => {
         try {
             if (!CnxMongoDB.connection) throw new Error("No hay conexión a la base de datos")
-            await CnxMongoDB.db.collection("solicitudes").insertOne(solicitud)
-            return { message: solicitud, status: 200 }
+            await CnxMongoDB.db.collection("solicitudes").insertOne(application)
+            return { message: application, status: 200 }
         }
         catch (error) {
             return { message: error.message, status: 400 }
         }
     }
-
-    updateSolicitud = async (solicitud, id) => {
+    updateApplication = async (application, id) => {
         try {
             if (!CnxMongoDB.connection) throw new Error("No hay conexión a la base de datos")
             await CnxMongoDB.db.collection('solicitudes').updateOne(
                 { _id: ObjectId(id) },
-                { $set: solicitud }
+                { $set: application }
             )
-            let solicitudActualizado = await this.findSolicitud(id)
-            return { message: solicitudActualizado, status: 200 }
+            let applicationUpdate = await this.findApplication(id)
+            return { message: applicationUpdate, status: 200 }
         }
         catch (error) {
             return { message: error.message, status: 400 }
         }
     }
-
-    deleteSolicitud = async id => {
+    deleteApplication = async id => {
         try {
             if (!CnxMongoDB.connection) throw new Error("No hay conexión a la base de datos")
-            let solicitudEliminada = await this.findSolicitud(id)
+            let applicationDelete = await this.findApplication(id)
             await CnxMongoDB.db.collection("solicitudes").deleteOne({ _id: new ObjectId(id) })
-            return solicitudEliminada
+            return applicationDelete
         }
         catch (error) {
             console.log(error)
@@ -68,5 +61,4 @@ class SolicitudesMongoDB {
         }
     }
 }
-
-export default SolicitudesMongoDB
+export default ApplicationsMongoDB
