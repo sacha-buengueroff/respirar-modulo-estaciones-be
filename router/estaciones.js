@@ -15,6 +15,10 @@ export class RouterEstaciones {
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
+        #swagger.responses[200] = {
+        description: "Estaciones por usuario encontradas o lista vacía",
+            schema:  [{ $ref: '#/definitions/Estacion' }]
+        } 
         */
     );
 
