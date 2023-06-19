@@ -247,39 +247,7 @@
             "description": "Datos de la estación",
             "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "name"
-                },
-                "coordinates": {
-                  "type": "array",
-                  "example": [
-                    -29.233012401017962,
-                    136.7063500973975
-                  ],
-                  "items": {
-                    "type": "number"
-                  }
-                },
-                "addStreet": {
-                  "type": "string",
-                  "example": "Street"
-                },
-                "addLocaly": {
-                  "type": "string",
-                  "example": "Localy"
-                },
-                "addRegion": {
-                  "type": "string",
-                  "example": "Region"
-                },
-                "external": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "$ref": "#/definitions/bodyPost"
             }
           }
         ],
@@ -301,6 +269,7 @@
                 "El parametro localidad se encuentra vacio o nulo",
                 "El parametro region se encuentra vacio o nulo",
                 "El parametro external vacio o no corresponde el tipo",
+                "El parametro email vacio o invalido",
                 "El formulario cuenta con un campo extra"
               ],
               "items": {
@@ -396,43 +365,7 @@
             "in": "body",
             "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "name"
-                },
-                "coordinates": {
-                  "type": "array",
-                  "example": [
-                    -29.233012401017962,
-                    136.7063500973975
-                  ],
-                  "items": {
-                    "type": "number"
-                  }
-                },
-                "addStreet": {
-                  "type": "string",
-                  "example": "Street"
-                },
-                "addLocaly": {
-                  "type": "string",
-                  "example": "Localy"
-                },
-                "addRegion": {
-                  "type": "string",
-                  "example": "Region"
-                },
-                "external": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "email": {
-                  "type": "string",
-                  "example": "ciudades@hotmail.com"
-                }
-              }
+              "$ref": "#/definitions/bodyPost"
             },
             "description": "Datos de la estación"
           }
@@ -455,8 +388,8 @@
                 "El parametro localidad se encuentra vacio o nulo",
                 "El parametro region se encuentra vacio o nulo",
                 "El parametro external vacio o no corresponde el tipo",
-                "El formulario cuenta con un campo extra",
-                "El parametro email vacio o invalido"
+                "El parametro email vacio o invalido",
+                "El formulario cuenta con un campo extra"
               ],
               "items": {
                 "type": "string"
@@ -774,6 +707,45 @@
         "_id": {
           "type": "string",
           "example": "649098c4f1fc4637c0a206b2"
+        }
+      }
+    },
+    "bodyPost": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name"
+        },
+        "coordinates": {
+          "type": "array",
+          "example": [
+            -29.233012401017962,
+            136.7063500973975
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "addStreet": {
+          "type": "string",
+          "example": "Street"
+        },
+        "addLocaly": {
+          "type": "string",
+          "example": "Localy"
+        },
+        "addRegion": {
+          "type": "string",
+          "example": "Region"
+        },
+        "external": {
+          "type": "boolean",
+          "example": true
+        },
+        "email": {
+          "type": "string",
+          "example": "ciudades@hotmail.com"
         }
       }
     }
