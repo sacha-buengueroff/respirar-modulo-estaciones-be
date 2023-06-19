@@ -90,8 +90,15 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Estación deshabilitada"
+          "200": {
+            "description": "Estación deshabilitada",
+            "schema": {
+              "type": "string",
+              "example": "Se suspendio correctamente el dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
             "description": "Estacion inexistente / previamente Deshabilitada",
@@ -294,7 +301,6 @@
                 "El parametro localidad se encuentra vacio o nulo",
                 "El parametro region se encuentra vacio o nulo",
                 "El parametro external vacio o no corresponde el tipo",
-                "El parametro email vacio o invalido",
                 "El formulario cuenta con un campo extra"
               ],
               "items": {
@@ -352,7 +358,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitudes encontradas o lista vacia (Búsqueda sin Id)",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada (Búsqueda con Id)",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/solicitudes/": {
@@ -603,6 +632,49 @@
         "mailId": {
           "type": "string",
           "example": "AirQualityObserved1"
+        }
+      }
+    },
+    "Solicitud": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name"
+        },
+        "coordinates": {
+          "type": "array",
+          "example": [
+            -38.6486495,
+            -163.369692
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "addStreet": {
+          "type": "string",
+          "example": "corrientes"
+        },
+        "addLocaly": {
+          "type": "string",
+          "example": "CABA"
+        },
+        "addRegion": {
+          "type": "string",
+          "example": "PAMPA"
+        },
+        "external": {
+          "type": "boolean",
+          "example": true
+        },
+        "email": {
+          "type": "string",
+          "example": "ciudades@hotmail.com"
+        },
+        "_id": {
+          "type": "string",
+          "example": "649098c4f1fc4637c0a206b2"
         }
       }
     }

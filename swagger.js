@@ -70,6 +70,19 @@ const doc = {
             "id": "urn:ngsi-ld:AirQualityObserved:1",
             "mailId": "AirQualityObserved1"
         },
+        Solicitud: {
+            "name": "name",
+            "coordinates": [
+                -38.6486495,
+                -163.369692
+            ],
+            "addStreet": "corrientes",
+            "addLocaly": "CABA",
+            "addRegion": "PAMPA",
+            "external": true,
+            "email": "ciudades@hotmail.com",
+            "_id": "649098c4f1fc4637c0a206b2"
+        }
     }
 
 };

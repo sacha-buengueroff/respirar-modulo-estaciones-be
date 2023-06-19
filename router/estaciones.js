@@ -167,7 +167,6 @@ export class RouterEstaciones {
                         "El parametro localidad se encuentra vacio o nulo",
                         "El parametro region se encuentra vacio o nulo",
                         "El parametro external vacio o no corresponde el tipo",
-                        "El parametro email vacio o invalido",
                         "El formulario cuenta con un campo extra"]
             }  
             */
