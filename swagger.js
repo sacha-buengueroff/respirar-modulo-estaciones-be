@@ -4,7 +4,7 @@ const doc = {
     info: {
         title: 'RespirAR Módulo EStaciones API',
     },
-    host: 'localhost:8081',
+    host: 'localhost:8080',
     schemes: ['http'],
     definitions: {
         Estacion: {
