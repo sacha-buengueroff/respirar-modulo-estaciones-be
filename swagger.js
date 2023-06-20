@@ -82,6 +82,18 @@ const doc = {
             "external": true,
             "email": "ciudades@hotmail.com",
             "_id": "649098c4f1fc4637c0a206b2"
+        },
+        bodyPost:{
+            "name": "name" , 
+            "coordinates": [
+                            -29.233012401017962,
+                            136.7063500973975
+                            ],
+            "addStreet":"Street", 
+            "addLocaly": "Localy", 
+            "addRegion":"Region" , 
+            "external": true,
+            "email" : "ciudades@hotmail.com"  
         }
     }
 

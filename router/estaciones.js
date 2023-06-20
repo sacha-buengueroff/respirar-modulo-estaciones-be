@@ -143,17 +143,7 @@ export class RouterEstaciones {
                 in: 'body',
                 description: 'Datos de la estación',
                 required: "false",
-                schema: {
-                    "name": "name" , 
-                    "coordinates": [
-                                    -29.233012401017962,
-                                    136.7063500973975
-                                    ],
-                    "addStreet":"Street", 
-                    "addLocaly": "Localy", 
-                    "addRegion":"Region" , 
-                    "external": false
-                }
+                schema: { $ref: '#/definitions/bodyPost' }
             }
             #swagger.responses[201] = {
               description: "Estación agregada",
@@ -167,6 +157,7 @@ export class RouterEstaciones {
                         "El parametro localidad se encuentra vacio o nulo",
                         "El parametro region se encuentra vacio o nulo",
                         "El parametro external vacio o no corresponde el tipo",
+                        "El parametro email vacio o invalido",
                         "El formulario cuenta con un campo extra"]
             }  
             */
