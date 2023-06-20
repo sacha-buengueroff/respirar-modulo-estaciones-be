@@ -11,12 +11,12 @@ describe("test endpoints estaciones", () => {
     let app;
 
     let request;
-    let urlIot = "http://localhost:4041/iot/devices/"
-    let urlCb = "http://localhost:1026/v2/entities/"
+    let urlIot = `${config.AGENT_URL}/devices/`
+    let urlCb = `${config.ORION_URL}v2/entities/`
     let req_config = {
         headers: {
-            "fiware-service": "openiot",
-            "fiware-servicepath": "/"
+            "fiware-service": config.FIWARE_SERVICE,
+            "fiware-servicepath": config.FIWARE_SERVICETYPE
         }
     } 
 

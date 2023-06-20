@@ -1,8 +1,6 @@
 import axios from 'axios'
 import config from '../config.js'
-
 class CbHttp {
-
     constructor() {
         this.url = config.ORION_URL
         this.config = {
@@ -12,7 +10,6 @@ class CbHttp {
             }
         }
     }
-
     async getCbStatus() {
         try {
             await axios.get(this.url + "version")
@@ -21,8 +18,7 @@ class CbHttp {
             throw new Error('Context Broker no disponible');
         }
     }
-
-    getEstaciones = async (id) => {
+    getStations = async (id) => {
         try {
             const response = id ? await axios.get(this.url + "v2/entities/" + id, this.config) : await axios.get(this.url + "v2/entities/", this.config)
             return {
@@ -35,18 +31,15 @@ class CbHttp {
                     status: 400,
                     message: "No se ha encontrado la entidad solicitada. Compruebe el id."
                 }
-            }
-            else {
+            } else {
                 return {
                     status: error.response.status,
                     message: error.response.data.description
                 }
             }
         }
-
     }
-
-    suspenderEstacion = async (id) => {
+    suspendStation = async (id) => {
         let body = {
             "enable": {
                 "value": false,
@@ -55,8 +48,7 @@ class CbHttp {
         }
         await axios.patch(this.url + "v2/entities/" + id + "/attrs/", body, this.config)
     }
-
-    getEstacionesPorUsuario = async (user) => {
+    getStationsByUser = async (user) => {
         this.config.params = {
             q: "ownerId=='urn:ngsi-ld:" + user + "'",
             options: "keyValues",
@@ -75,43 +67,38 @@ class CbHttp {
             }
         }
     }
-
-
-    getEstacionesCiudad = async () => {
-        let respuesta = {}
+    getCityStations = async () => {
+        let response = {}
         this.config.params = {
             q: "dataProvider=='Respirar'",
             options: "keyValues",
             type: "AirQualityObserved"
         }
-
         try {
-            let llamada = await axios.get(this.url + "v2/entities/", this.config)
-            respuesta.status = llamada.status
-            respuesta.message = llamada.data
+            let call = await axios.get(this.url + "v2/entities/", this.config)
+            response.status = call.status
+            response.message = call.data
         } catch (error) {
-            respuesta.status = error.response.status
-            respuesta.message = error.response.data.orionError.details
+            response.status = error.response.status
+            response.message = error.response.data.orionError.details
         }
-        return respuesta
+        return response
     }
-
-    async checkSuscripcionDraco() {
-        let llamada
-        try{
-            llamada = await axios.get(this.url + "v2/subscriptions/", this.config)
-        }catch{
+    async checkDracoSubscription() {
+        let call
+        try {
+            call = await axios.get(this.url + "v2/subscriptions/", this.config)
+        } catch {
             throw new Error('Error al intentar obtener suscripción de Draco mediante Orion');
         }
           // Se fija si el array devuelto contiene al menos una subscripción
-        if(llamada.data.length > 0){
+        if(call.data.length > 0){
             console.log("Suscripción previamente creada")
-        }else{
-            await this.crearSuscripcionDraco()
+        } else {
+            await this.createDracoSubscription()
         }
     }
-
-    async crearSuscripcionDraco(){
+    async createDracoSubscription(){
         const body = {
             "description": "Suscripción a cambios en todas las entidades y campos",
             "subject": {
@@ -133,17 +120,12 @@ class CbHttp {
             },
             "throttling": 0
         }
-
-        try{
+        try {
             await axios.post(this.url + "v2/subscriptions/",body, this.config)
             console.log("Suscripción a Draco creada")
-        }catch(e){
+        } catch(e) {
             throw new Error('Error al intentar crear suscripción de Draco mediante Orion');
         }
-
     }
-
-
 }
-
 export default CbHttp
