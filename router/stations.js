@@ -4,13 +4,13 @@ import ControllerStations from "../controller/stationsController.js";
 export class StationRouter {
   constructor() {
     this.router = express.Router();
-    this.ControllerStations = new ControllerStations();
+    this.controllerStations = new ControllerStations();
   }
   start() {
     /* GET Estaciones de Ciudad del Futuro */
     this.router.get(
       "/estacionesCiudad",
-      this.ControllerStations.getCityStations
+      this.controllerStations.getCityStations
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
@@ -19,7 +19,7 @@ export class StationRouter {
     /* GET Estaciones totales*/
     this.router.get(
       "/:id?",
-      this.ControllerStations.getStations
+      this.controllerStations.getStations
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener una estación.'
@@ -32,7 +32,7 @@ export class StationRouter {
     /* PUT Suspender Estación */
     this.router.put(
       "/suspenderEstacion/:id",
-      this.ControllerStations.suspendStation
+      this.controllerStations.suspendStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para suspender una estación.'
@@ -45,7 +45,7 @@ export class StationRouter {
     /* PUT Habilitar Estación */
     this.router.put(
       "/habilitarEstacion/:id",
-      this.ControllerStations.enableStation
+      this.controllerStations.enableStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para habilitar una estación.'
@@ -58,7 +58,7 @@ export class StationRouter {
     /* POST Datos Estación */
     this.router.post(
       "/data/",
-      this.ControllerStations.postDataStation
+      this.controllerStations.postDataStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar datos de una estación.'
@@ -83,7 +83,7 @@ export class StationRouter {
     /* POST Estación */
     this.router.post(
       "/",
-      this.ControllerStations.postStation
+      this.controllerStations.postStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar una estación.'
@@ -111,7 +111,7 @@ export class StationRouter {
     );
     this.router.get(
       "/porUsuario/:user",
-      this.ControllerStations.getStationsByUser
+      this.controllerStations.getStationsByUser
     );
     return this.router;
   }

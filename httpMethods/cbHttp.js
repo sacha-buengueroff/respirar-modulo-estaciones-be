@@ -31,8 +31,7 @@ class CbHttp {
                     status: 400,
                     message: "No se ha encontrado la entidad solicitada. Compruebe el id."
                 }
-            }
-            else {
+            } else {
                 return {
                     status: error.response.status,
                     message: error.response.data.description
@@ -87,15 +86,15 @@ class CbHttp {
     }
     async checkDracoSubscription() {
         let call
-        try{
+        try {
             call = await axios.get(this.url + "v2/subscriptions/", this.config)
-        }catch{
+        } catch {
             throw new Error('Error al intentar obtener suscripción de Draco mediante Orion');
         }
           // Se fija si el array devuelto contiene al menos una subscripción
         if(call.data.length > 0){
             console.log("Suscripción previamente creada")
-        }else{
+        } else {
             await this.createDracoSubscription()
         }
     }
@@ -121,10 +120,10 @@ class CbHttp {
             },
             "throttling": 0
         }
-        try{
+        try {
             await axios.post(this.url + "v2/subscriptions/",body, this.config)
             console.log("Suscripción a Draco creada")
-        }catch(e){
+        } catch(e) {
             throw new Error('Error al intentar crear suscripción de Draco mediante Orion');
         }
     }

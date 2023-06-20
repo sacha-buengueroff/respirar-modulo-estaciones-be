@@ -40,7 +40,7 @@ class StationsController {
         let response
         if (station.external != undefined && typeof station.external === "boolean") {
             response = station.external ? validate(station, schema_application) : validate(station, schema_station)
-        }else {
+        } else {
             response = {
                 message: "El parametro external vacio o no corresponde el tipo",
                 status: 404
@@ -52,5 +52,4 @@ class StationsController {
         res.status(response.status).json(response.message)
     }
 }
-
 export default StationsController

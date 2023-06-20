@@ -28,12 +28,10 @@ class ApiStations {
         // obtengo estaciones para saber la cantidad
         const stations = await this.cbHttp.getStations()
         let numberId = (stations.message.length + 1)
-
         // Concatenacion
         form.id = this.type + numberId
         form.entityName = this.protocol + this.type + ":" + numberId
         form.name = this.protocol + form.name
-
         var response = await this.AgentUlHttp.postStation(form)
         if (form.external) {
             await Mailer.sendMail(form.email, response.message.mailId)
@@ -47,13 +45,13 @@ class ApiStations {
             let isEnable= typeof(station.enable) === "boolean"?station.enable:station.enable.value
             if(isEnable) {
                 return await this.AgentUlHttp.postDataStation(k, i, data)
-            }else {
+            } else {
                 return {
                     status: 404,
                     message: "El dispositivo está deshabilitado"
                 }
             }
-        }else if (typeof(station) == "string") {
+        } else if (typeof(station) == "string") {
             return {
                 status: 404,
                 message: "El dispositivo no existe"
