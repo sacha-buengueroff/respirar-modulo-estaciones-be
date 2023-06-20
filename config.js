@@ -2,15 +2,15 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const PORT = 8080
-const STRCNX = process.env.STRCNX || 'mongodb://localhost:27017'
+const PORT = 8081
+const STRCNX = process.env.STRCNX || 'mongodb://db-mongo:27017'
 const MODO_PERSISTENCIA = process.env.MODO_PERSISTENCIA || 'MONGO'
 const BASE = process.env.BASE || 'local'
 const MAIL = process.env.MAIL
 const MAIL_PASS = process.env.MAIL_PASS
-const ORION_URL = 'http://localhost:1026/'
-const AGENT_URL = 'http://localhost:4041/iot'
-const AGENT_URL_NORTH = 'http://localhost:7897/iot/d'
+const ORION_URL = 'http://orion:1026/'
+const AGENT_URL = 'http://iot-agent-ul:4041/iot'
+const AGENT_URL_NORTH = 'http://iot-agent-ul:7897/iot/d'
 const FIWARE_SERVICE = 'openiot'
 const FIWARE_SERVICETYPE = '/'
 const ENTITY_TYPE = 'AirQualityObserved'
