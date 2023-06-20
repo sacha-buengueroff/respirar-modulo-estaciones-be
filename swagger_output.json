@@ -18,7 +18,20 @@
         ],
         "description": "Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Estaciones por usuario encontradas o lista vacía",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Estacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/{id?}": {
@@ -35,7 +48,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Estaciones encontradas o lista vacía",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Estacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Estacion inexistente (Búsqueda con Id)",
+            "schema": {
+              "type": "string",
+              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/suspenderEstacion/{id}": {
@@ -49,10 +85,32 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id extendido formato JsonLD"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Estación deshabilitada",
+            "schema": {
+              "type": "string",
+              "example": "Se suspendio correctamente el dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Estacion inexistente / previamente Deshabilitada",
+            "schema": {
+              "type": "string",
+              "example": "Error al suspender el dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/habilitarEstacion/{id}": {
@@ -66,10 +124,42 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id extendido formato JsonLD"
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Estación habilitada",
+            "schema": {
+              "type": "string",
+              "example": "Se habilito correctamente el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación inexistente",
+            "schema": {
+              "type": "string",
+              "example": "No se ha encontrado la entidad solicitada. Compruebe el Id",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "409": {
+            "description": "Estación previamente habilitada",
+            "schema": {
+              "type": "string",
+              "example": "Error al habilitar el dispositivo urn:ngsi-ld:AirQualityObserved:1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/data/": {
@@ -77,34 +167,74 @@
         "tags": [
           "Estaciones"
         ],
-        "description": "Endpoint para publicar datos de una estación.",
+        "description": "Endpoint que los usuarios podran utilizar para publicar datos de una estación.",
         "parameters": [
           {
             "name": "i",
             "in": "query",
+            "description": "Id de estación enviado por mail",
             "required": true,
             "type": "string"
           },
           {
             "name": "k",
             "in": "query",
+            "description": "ApiKey de servicio enviado por mail",
             "required": true,
             "type": "string"
           },
           {
             "name": "data",
             "in": "body",
-            "description": "Plain text data",
+            "description": "Atributos a actualizar (Texto plano)",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {}
+              "type": "string",
+              "example": "t|1|r|1|pm1|0.5|pm10|1|pm25|1"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Datos cargados correctamente",
+            "schema": {
+              "type": "string",
+              "example": "Se cargaron correctamente los datos",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Se envia texto plano erroneo",
+            "schema": {
+              "type": "string",
+              "example": "Error al cargar los datos del dispositivo AirQualityObserved1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Estación inexistente / Estacion Deshabilitada",
+            "schema": {
+              "type": "array",
+              "example": [
+                "El dispositivo no existe",
+                "El dispositivo esta deshabilitado"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
-    "/estaciones/{idSolicitud?}": {
+    "/estaciones/": {
       "post": {
         "tags": [
           "Estaciones"
@@ -112,61 +242,75 @@
         "description": "Endpoint para publicar una estación.",
         "parameters": [
           {
-            "name": "idSolicitud?",
-            "in": "path",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "estacion",
             "in": "body",
             "description": "Datos de la estación",
             "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "name"
-                },
-                "coordinates": {
-                  "type": "array",
-                  "example": [
-                    -29.233012401017962,
-                    136.7063500973975
-                  ],
-                  "items": {
-                    "type": "number"
-                  }
-                },
-                "addStreet": {
-                  "type": "string",
-                  "example": "Street"
-                },
-                "addLocaly": {
-                  "type": "string",
-                  "example": "Localy"
-                },
-                "addRegion": {
-                  "type": "string",
-                  "example": "Region"
-                },
-                "external": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "$ref": "#/definitions/bodyPost"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Estación agregada",
+            "schema": {
+              "$ref": "#/definitions/PostEstacion"
+            }
+          },
+          "404": {
+            "description": "Parametros erroneos, alguno de los siguientes mensajes",
+            "schema": {
+              "type": "array",
+              "example": [
+                "El parametro nombre de usuario se encuentra vacio o nulo",
+                "El parametro coordenadas es invalido",
+                "El parametro calle se encuentra vacio o nulo",
+                "El parametro localidad se encuentra vacio o nulo",
+                "El parametro region se encuentra vacio o nulo",
+                "El parametro external vacio o no corresponde el tipo",
+                "El parametro email vacio o invalido",
+                "El formulario cuenta con un campo extra"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/estaciones/porUsuario/{user}": {
       "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Estaciones"
+        ],
+        "description": "Endpoint para estaciones por usuario.",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estaciones por usuario encontradas o lista vacía",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Estacion"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/solicitudes/{idSolicitud?}": {
@@ -174,7 +318,7 @@
         "tags": [
           "Solicitudes"
         ],
-        "description": "Endpoint para obtener un listado de solicitudes.",
+        "description": "Endpoint para obtener un listado de solicitudes o buscar una solicitud por id.",
         "parameters": [
           {
             "name": "idSolicitud?",
@@ -183,7 +327,30 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitudes encontradas o lista vacia",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada (Búsqueda con Id)",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/solicitudes/": {
@@ -196,14 +363,83 @@
           {
             "name": "solicitud",
             "in": "body",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "object",
-              "properties": {}
-            }
+              "$ref": "#/definitions/bodyPost"
+            },
+            "description": "Datos de la estación"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitud agregada",
+            "schema": {
+              "$ref": "#/definitions/Solicitud"
+            }
+          },
+          "404": {
+            "description": "Parametros erroneos, alguno de los siguientes mensajes",
+            "schema": {
+              "type": "array",
+              "example": [
+                "El parametro nombre de usuario se encuentra vacio o nulo",
+                "El parametro coordenadas es invalido",
+                "El parametro calle se encuentra vacio o nulo",
+                "El parametro localidad se encuentra vacio o nulo",
+                "El parametro region se encuentra vacio o nulo",
+                "El parametro external vacio o no corresponde el tipo",
+                "El parametro email vacio o invalido",
+                "El formulario cuenta con un campo extra"
+              ],
+              "items": {
+                "type": "string"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/solicitudes/rechazar/{idSolicitud}": {
+      "delete": {
+        "tags": [
+          "Solicitudes"
+        ],
+        "description": "Endpoint para eliminación de solicitudes, adicionalmente notifica por mail a solicitante.",
+        "parameters": [
+          {
+            "name": "idSolicitud",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solicitud Rechazada",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/solicitudes/{idSolicitud}": {
@@ -218,15 +454,299 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "idSolicitud?",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Solicitud Rechazada",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Solicitud"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Estación no encontrada",
+            "schema": {
+              "type": "string",
+              "example": "No se encontró solicitud con el id enviado",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Estacion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "urn:ngsi-ld:AirQualityObserved:1"
+        },
+        "type": {
+          "type": "string",
+          "example": "AirQualityObserved"
+        },
+        "TimeInstant": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "DateTime"
+            },
+            "value": {
+              "type": "string",
+              "example": "2023-06-17T14:47:05.634Z"
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Address"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "streetAddress": {
+                      "type": "string",
+                      "example": "corrientes"
+                    },
+                    "addressLocality": {
+                      "type": "string",
+                      "example": "CABA"
+                    },
+                    "addressRegion": {
+                      "type": "string",
+                      "example": "PAMPA"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dataProvider": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "String"
+            },
+            "value": {
+              "type": "string",
+              "example": "Respirar"
+            }
+          }
+        },
+        "enable": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Boolean"
+            },
+            "value": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Point"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "coordinates": {
+                  "type": "array",
+                  "example": [
+                    -38.6486495,
+                    -163.369692
+                  ],
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ownerId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "String"
+            },
+            "value": {
+              "type": "string",
+              "example": "urn:ngsi-ld:name"
+            }
+          }
+        },
+        "pm1": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Float"
+            },
+            "value": {}
+          }
+        },
+        "pm10": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Float"
+            },
+            "value": {}
+          }
+        },
+        "pm25": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Float"
+            },
+            "value": {}
+          }
+        },
+        "reliability": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Float"
+            },
+            "value": {}
+          }
+        },
+        "temperature": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "Float"
+            },
+            "value": {}
+          }
+        }
+      }
+    },
+    "PostEstacion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "urn:ngsi-ld:AirQualityObserved:1"
+        },
+        "mailId": {
+          "type": "string",
+          "example": "AirQualityObserved1"
+        }
+      }
+    },
+    "Solicitud": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name"
+        },
+        "coordinates": {
+          "type": "array",
+          "example": [
+            -38.6486495,
+            -163.369692
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "addStreet": {
+          "type": "string",
+          "example": "corrientes"
+        },
+        "addLocaly": {
+          "type": "string",
+          "example": "CABA"
+        },
+        "addRegion": {
+          "type": "string",
+          "example": "PAMPA"
+        },
+        "external": {
+          "type": "boolean",
+          "example": true
+        },
+        "email": {
+          "type": "string",
+          "example": "ciudades@hotmail.com"
+        },
+        "_id": {
+          "type": "string",
+          "example": "649098c4f1fc4637c0a206b2"
+        }
+      }
+    },
+    "bodyPost": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name"
+        },
+        "coordinates": {
+          "type": "array",
+          "example": [
+            -29.233012401017962,
+            136.7063500973975
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "addStreet": {
+          "type": "string",
+          "example": "Street"
+        },
+        "addLocaly": {
+          "type": "string",
+          "example": "Localy"
+        },
+        "addRegion": {
+          "type": "string",
+          "example": "Region"
+        },
+        "external": {
+          "type": "boolean",
+          "example": true
+        },
+        "email": {
+          "type": "string",
+          "example": "ciudades@hotmail.com"
+        }
       }
     }
   }
