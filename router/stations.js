@@ -158,10 +158,7 @@ export class StationRouter {
     );
     this.router.get(
       "/porUsuario/:user",
-<<<<<<< HEAD:router/stations.js
       this.controllerStations.getStationsByUser
-=======
-      this.controladorEstaciones.getEstacionesPorUsuario
       /*
       #swagger.tags = ['Estaciones']
       #swagger.description = 'Endpoint para estaciones por usuario.'
@@ -174,7 +171,6 @@ export class StationRouter {
             schema:  [{ $ref: '#/definitions/Estacion' }]
         }       
       */
->>>>>>> origin/develop:router/estaciones.js
     );
     return this.router;
   }
