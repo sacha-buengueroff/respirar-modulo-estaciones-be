@@ -1,6 +1,6 @@
 import config from '../config.js'
 export const mailHtml = (idDevice) => {
-  var url = `http://localhost:8080/estaciones/data/?k=${config.APIKEY}=${idDevice}`
+  var url = `http://localhost:8080/estaciones/data/?k=${config.APIKEY}&i=${idDevice}`
   var mailHtml = `<html xmlns:v="urn:schemas-microsoft-com:vml">
   <head>
       <title></title>
