@@ -1,17 +1,13 @@
 import express from 'express'
-import ControladorSolicitudes from '../controller/solicitudesController.js'
-
-
-export class RouterSolicitudes {
-    
+import ApplicationController from '../controller/applicationController.js'
+export class ApplicationRouter {
     constructor() {
         this.router = express.Router()
-        this.controladorSolicitudes = new ControladorSolicitudes()
+        this.applicationController = new ApplicationController()
     }
-
     start() {
         /* GET Listado de Solicitudes de Inscripción de EStaciones */
-        this.router.get('/:idSolicitud?', this.controladorSolicitudes.getSolicitudes
+        this.router.get('/:idSolicitud?', this.applicationController.getApplications
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para obtener un listado de solicitudes.'
@@ -21,9 +17,8 @@ export class RouterSolicitudes {
         }
         */
         )
-
         /* POST Alta Solicitud de Inscripción de Estación */
-        this.router.post('/', this.controladorSolicitudes.postSolicitud
+        this.router.post('/', this.applicationController.postApplication
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para dar de alta una solicitud.'
@@ -34,7 +29,7 @@ export class RouterSolicitudes {
         */
         )
         /* POST Rechazo Solicitud de Inscripción de Estación */
-        this.router.delete('/rechazar/:idSolicitud', this.controladorSolicitudes.rejectSolicitud
+        this.router.delete('/rechazar/:idSolicitud', this.applicationController.rejectApplication
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para eliminación de solicitudes.'
@@ -44,9 +39,8 @@ export class RouterSolicitudes {
         }
         */
         )
-
         /* POST Eliminar Solicitud de Inscripción de Estación */
-        this.router.delete('/:idSolicitud', this.controladorSolicitudes.deleteSolicitud
+        this.router.delete('/:idSolicitud', this.applicationController.deleteApplication
         /*
         #swagger.tags = ['Solicitudes']
         #swagger.description = 'Endpoint para eliminación de solicitudes.'
@@ -56,8 +50,6 @@ export class RouterSolicitudes {
         }
         */
         )
-
-
         return this.router
     }
 }

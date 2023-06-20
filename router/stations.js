@@ -1,27 +1,25 @@
 import express from "express";
-import ControladorEstaciones from "../controller/estacionesController.js";
+import ControllerStations from "../controller/stationsController.js";
 
-export class RouterEstaciones {
+export class StationRouter {
   constructor() {
     this.router = express.Router();
-    this.controladorEstaciones = new ControladorEstaciones();
+    this.ControllerStations = new ControllerStations();
   }
-
   start() {
     /* GET Estaciones de Ciudad del Futuro */
     this.router.get(
       "/estacionesCiudad",
-      this.controladorEstaciones.getEstacionesCiudad
+      this.ControllerStations.getCityStations
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener aquellas estacione pertenecientes a Ciudad del Futuro.'
         */
     );
-
     /* GET Estaciones totales*/
     this.router.get(
       "/:id?",
-      this.controladorEstaciones.getEstaciones
+      this.ControllerStations.getStations
       /*
         #swagger.tags = ['Estaciones']
         #swagger.description = 'Endpoint para obtener una estación.'
@@ -31,11 +29,10 @@ export class RouterEstaciones {
         }
         */
     );
-
     /* PUT Suspender Estación */
     this.router.put(
       "/suspenderEstacion/:id",
-      this.controladorEstaciones.suspenderEstacion
+      this.ControllerStations.suspendStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para suspender una estación.'
@@ -45,11 +42,10 @@ export class RouterEstaciones {
             }
             */
     );
-
     /* PUT Habilitar Estación */
     this.router.put(
       "/habilitarEstacion/:id",
-      this.controladorEstaciones.habilitarEstacion
+      this.ControllerStations.enableStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para habilitar una estación.'
@@ -59,11 +55,10 @@ export class RouterEstaciones {
             }
             */
     );
-
     /* POST Datos Estación */
     this.router.post(
       "/data/",
-      this.controladorEstaciones.postDatosEstacion
+      this.ControllerStations.postDataStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar datos de una estación.'
@@ -85,11 +80,10 @@ export class RouterEstaciones {
             }
             */
     );
-
     /* POST Estación */
     this.router.post(
       "/",
-      this.controladorEstaciones.postEstacion
+      this.ControllerStations.postStation
       /*
             #swagger.tags = ['Estaciones']
             #swagger.description = 'Endpoint para publicar una estación.'
@@ -115,12 +109,10 @@ export class RouterEstaciones {
             }
             */
     );
-
     this.router.get(
       "/porUsuario/:user",
-      this.controladorEstaciones.getEstacionesPorUsuario
+      this.ControllerStations.getStationsByUser
     );
-
     return this.router;
   }
 }

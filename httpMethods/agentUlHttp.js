@@ -1,32 +1,29 @@
 import axios from 'axios'
 import CbHttp from '../httpMethods/cbHttp.js'
-
+import config from '../config.js'
 class AgentUlHttp {
-
     constructor() {
         this.cbHttp = new CbHttp()
-        this.url = "http://iot-agent-ul:4041/iot"
+        this.url = config.AGENT_URL
         this.config = {
             headers: {
-                "fiware-service": "openiot",
-                "fiware-servicepath": "/",
-                "Content-Type": "application/json"
+                "fiware-service": config.FIWARE_SERVICE,
+                "fiware-servicepath": config.FIWARE_SERVICETYPE,
+                "Content-Type": config.CONTENT_TYPE
             }
         }
         this.postConfig = {
             headers: {
-                "Content-Type": "text/plain"
+                "Content-Type": config.CONTENT_TYPE_DATA
             }
         }
-        this.entityType = "AirQualityObserved"
-        this.urlCb = "http://orion:1026"
-        this.apikey = "4jggokgpepnvsb2uv4s40d59ov"
-        this.resource = "/iot/d"
-        this.urlNorthbound = "http://iot-agent-ul:7897/iot/d"
+        this.entityType = config.ENTITY_TYPE
+        this.urlCb = config.ORION_URL
+        this.apikey = config.APIKEY
+        this.resource = config.RESOURCE
+        this.urlNorthbound = config.AGENT_URL_NORTH
     }
-
     async getAgentStatus() {
-
         try {
             await axios.get(this.url + "/about")
         }
@@ -34,8 +31,7 @@ class AgentUlHttp {
             throw new Error('Imagen IotAgent no esta disponible');
         }
     }
-
-    async postEstacion(form) {
+    async postStation(form) {
         const { name, coordinates, addStreet, addLocaly, addRegion, external, id, entityName } = form
         let body = {
             "devices": [
@@ -108,11 +104,10 @@ class AgentUlHttp {
                 }
             ]
         }
-
         try {
-            let respuesta = await axios.post(this.url + "/devices", body, this.config)
+            let response = await axios.post(this.url + "/devices", body, this.config)
             return {
-                status: respuesta.status,
+                status: response.status,
                 message: {
                     id: entityName,
                     mailId: id
@@ -159,13 +154,13 @@ class AgentUlHttp {
                 throw new Error('Imagen IotAgent no esta disponible');
         }
     }
-    async suspenderEstacion(id) {
+    async suspendStation(id) {
         try {
-            await this.cbHttp.suspenderEstacion(id)
+            await this.cbHttp.suspendStation(id)
             id = id.split(":").slice(2).join("")
             const response = await axios.delete(this.url + "/devices/" + id, this.config)
             return {
-                status: response.status,
+                status: 200,
                 message: "Se suspendio correctamente el dispositivo " + id
             }
         } catch (e) {
@@ -175,37 +170,41 @@ class AgentUlHttp {
             }
         }
     }
-    async habilitarEstacion(id) {
+    async enableStation(id) {
         try {
-            let estacion = await this.cbHttp.getEstaciones(id)
-            estacion = estacion.message;
-            let form = {
-                id: estacion.id.split(":").slice(2).join(""),
-                entityName: estacion.id,
-                name: estacion.ownerId.value,
-                coordinates: estacion.location.value.coordinates,
-                addStreet: estacion.address.value.address.streetAddress,
-                addLocaly: estacion.address.value.address.addressLocality,
-                addRegion: estacion.address.value.address.addressRegion,
-                external: (estacion.dataProvider.value != "Respirar")
+            let station = await this.cbHttp.getStations(id)
+            if(station.status == 400) {
+                return station
             }
-            var response = await this.postEstacion(form)
-            if (response.status > 199 && response.status < 300) {
-                return {
-                    status: response.status,
-                    message: "Se habilito correctamente el dispositivo " + id
+            else {
+                station = station.message;
+                let form = {
+                    id: station.id.split(":").slice(2).join(""),
+                    entityName: station.id,
+                    name: station.ownerId.value,
+                    coordinates: station.location.value.coordinates,
+                    addStreet: station.address.value.address.streetAddress,
+                    addLocaly: station.address.value.address.addressLocality,
+                    addRegion: station.address.value.address.addressRegion,
+                    external: (station.dataProvider.value != "Respirar")
                 }
-            } else {
-                const axiosError = {
-                    isAxiosError: true,
-                    response: {
+                var response = await this.postStation(form)
+                if (response.status > 199 && response.status < 300) {
+                    return {
                         status: response.status,
-                        data: { message: 'Recurso no encontrado' },
+                        message: "Se habilito correctamente el dispositivo " + id
                     }
+                } else {
+                    const axiosError = {
+                        isAxiosError: true,
+                        response: {
+                            status: response.status,
+                            data: { message: 'Recurso no encontrado' },
+                        }
+                    }
+                    throw axiosError
                 }
-                throw axiosError
             }
-
         } catch (e) {
             return {
                 status: e.response.status,
@@ -213,8 +212,7 @@ class AgentUlHttp {
             }
         }
     }
-
-    async postDatosEstacion(k, i, data) {
+    async postDataStation(k, i, data) {
         try {
             let response = await axios.post(`${this.urlNorthbound}?k=${k}&i=${i}`, data, this.postConfig)
             if (response.status > 199 && response.status < 300) {
@@ -241,5 +239,4 @@ class AgentUlHttp {
         }
     }
 }
-
 export default AgentUlHttp

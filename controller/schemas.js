@@ -1,4 +1,4 @@
-export const schema_solicitud = {
+export const schema_application = {
     name: value => !!value && value.trim() != "" ? true :  "El parametro nombre de usuario se encuentra vacio o nulo",
     coordinates: value => !!value && value.length === 2 ? true : "El parametro coordenadas es invalido",
     addStreet: value => !!value && value.trim() != "" ? true : "El parametro calle se encuentra vacio o nulo",
@@ -8,7 +8,7 @@ export const schema_solicitud = {
     email: value => !!value && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$/.test(value) ? true : "El parametro email vacio o invalido"
 }
 
-export const schema_estacion = {
+export const schema_station = {
     name: value => !!value && value.trim() != "" ? true :  "El parametro nombre de usuario se encuentra vacio o nulo",
     coordinates: value => !!value && value.length === 2 ? true : "El parametro coordenadas es invalido",
     addStreet: value => !!value && value.trim() != "" ? true : "El parametro calle se encuentra vacio o nulo",

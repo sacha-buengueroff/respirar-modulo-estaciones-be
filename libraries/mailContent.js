@@ -1,7 +1,7 @@
+import config from '../config.js'
 export const mailHtml = (idDevice) => {
-  var url = `http://localhost:8080/estaciones/data/?k=4jggokgpepnvsb2uv4s40d59ov&i=${idDevice}`
+  var url = `http://localhost:8080/estaciones/data/?k=${config.APIKEY}=${idDevice}`
   var mailHtml = `<html xmlns:v="urn:schemas-microsoft-com:vml">
-
   <head>
       <title></title>
       <meta charset="UTF-8">
@@ -873,10 +873,8 @@ export const mailHtml = (idDevice) => {
   </html>`;
   return mailHtml;
 }
-
-export const mailRechazoHtml = () => {
+export const mailRefusalHtml = () => {
   var html = `<html xmlns:v="urn:schemas-microsoft-com:vml">
-
 <head>
     <title></title>
     <meta charset="UTF-8">
@@ -1700,7 +1698,6 @@ export const mailRechazoHtml = () => {
         </div>
     </div>
 </body>
-
 </html>`;
   return html;
 };
